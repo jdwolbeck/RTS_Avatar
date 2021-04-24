@@ -1074,6 +1074,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1596315364}
+  - component: {fileID: 1596315365}
   m_Layer: 0
   m_Name: Player Buildings
   m_TagString: Untagged
@@ -1097,6 +1098,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1596315365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596315363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0f754cfa4d104e4383b2d8b70fdd70f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barracks: {fileID: 0}
+  turretSentry: {fileID: 0}
 --- !u!4 &1646354737 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 708248519514606419, guid: 0e69dbc25efd14843bff1cea53e2042d, type: 3}

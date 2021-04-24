@@ -37,7 +37,6 @@ namespace AvatarRTS.Player
                 {
                     string name = child.name.Substring(0, child.name.Length - 1).ToLower();
                     //TODO: remove this??? var stats = Units.UnitHandler.instance.GetBasicUnitStats(name);
-
                     if (type == playerUnits)
                     {
                         

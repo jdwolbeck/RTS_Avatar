@@ -16,19 +16,12 @@ namespace AvatarRTS.Units
         };
 
         // Variables used to define general characteristics of the unit
-        [Space(15)]
-        [Header("Unit Settings")]
-
         public unitType type;
         public string unitName;
         public GameObject humanPrefab;
         public GameObject infectedPrefab;
 
-        // Specific variables for each unit
-        [Space(15)]
-        [Header("Unit Base Stats")]
-        [Space(40)]
-
+        //Specific stats for the Base class
         public UnitStatTypes.Base baseStats;
     }
 }
