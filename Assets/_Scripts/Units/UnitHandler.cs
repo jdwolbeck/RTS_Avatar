@@ -41,7 +41,7 @@ namespace AvatarRTS.Units
                     unit = healer;
                     break;
                 default:
-                    Debug.Log($"Unit Type: {type} could not be found or does not exist!");
+                    DebugHandler.Print($"Unit Type: {type} could not be found or does not exist!");
                     return null;
             }
 
