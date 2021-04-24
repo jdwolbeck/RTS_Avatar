@@ -45,7 +45,7 @@ namespace AvatarRTS.Player
                     }
                     else if (type == enemyUnits)
                     {
-                        //set enemy stats j
+                        //set enemy stats
                         //playerUnit = unit.GetComponent<Player.PlayerUnit>();
                         Units.Enemy.EnemyUnit eU = tf.GetComponent<Units.Enemy.EnemyUnit>();
                         eU.baseStats = Units.UnitHandler.instance.GetBasicUnitStats(name);
