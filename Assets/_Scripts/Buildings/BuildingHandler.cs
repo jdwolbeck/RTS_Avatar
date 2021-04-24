@@ -9,7 +9,7 @@ namespace AvatarRTS.Buildings
         public static BuildingHandler instance;
 
         [SerializeField]
-        private BasicBuilding barracks;
+        private BasicBuilding barracks, turretSentry;
 
         private void Awake()
         {
@@ -23,6 +23,9 @@ namespace AvatarRTS.Buildings
             {
                 case "barrack":
                     building = barracks;
+                    break;
+                case "turretsentr":
+                    building = turretSentry;
                     break;
                 default:
                     DebugHandler.Print($"Building Type: {type} could not be found or does not exist!");

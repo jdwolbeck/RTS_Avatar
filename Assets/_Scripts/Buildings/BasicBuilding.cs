@@ -9,7 +9,8 @@ namespace AvatarRTS.Buildings
     {
         public enum buildingType
         {
-            Barracks
+            Barracks,
+            TurretSentry
         }
 
         [Space(15)]

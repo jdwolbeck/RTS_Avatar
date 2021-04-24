@@ -9,7 +9,7 @@ namespace AvatarRTS.Buildings
         [System.Serializable]
         public class Base
         {
-            public float health, armor, attack;
+            public float health, armor, attack, atkSpeed;
         }
     }
 }
