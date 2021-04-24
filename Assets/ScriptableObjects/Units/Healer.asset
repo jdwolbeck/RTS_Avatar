@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 210bc0712c374644ebd0e9dcf20e33d0, type: 3}
+  m_Name: Healer
+  m_EditorClassIdentifier: 
+  type: 2
+  unitName: 
+  humanPrefab: {fileID: 8035226579267388245, guid: 9893fe1fe69526b4980637baacbebec6, type: 3}
+  infectedPrefab: {fileID: 3604113886553895832, guid: 678ad71768c6a5248b77e4d074cc7307, type: 3}
+  baseStats:
+    cost: 250
+    attack: 25
+    atkRange: 7
+    atkSpeed: 2
+    health: 150
+    armor: 0
+    aggroRange: 10
