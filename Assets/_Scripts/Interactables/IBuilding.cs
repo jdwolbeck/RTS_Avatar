@@ -11,7 +11,7 @@ namespace AvatarRTS.Interactables
         {
             base.OnInteractEnter();
             //Add stuff along with general Interactable function
-
+            //
             GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             Material newMat = Resources.Load(@"Materials/bulletMat", typeof(Material)) as Material;
             sphere.GetComponent<Renderer>().material = newMat;
