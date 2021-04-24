@@ -6,6 +6,6 @@ namespace AvatarRTS.Buildings.Player
 {
     public class PlayerBuilding : MonoBehaviour
     {
-        public BuildingStatTypes.Base baseStats; //Justin Test
+        public BuildingStatTypes.Base baseStats;
     }
 }
