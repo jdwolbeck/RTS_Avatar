@@ -10,7 +10,7 @@ namespace AvatarRTS.Interactables
         public override void OnInteractEnter()
         {
             base.OnInteractEnter();
-            //Add stuff along with general Interactable function.
+            //Add stuff along with general Interactable function ;;
             
             GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             Material newMat = Resources.Load(@"Materials/bulletMat", typeof(Material)) as Material;
