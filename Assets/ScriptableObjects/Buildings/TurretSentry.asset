@@ -9,17 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a391c05c97648e7459250671924b5d20, type: 3}
+  m_Script: {fileID: 11500000, guid: d67b251d480e5f34da6fe4c0d6d9e169, type: 3}
   m_Name: TurretSentry
   m_EditorClassIdentifier: 
-  type: 1
+  type: 0
   name: 
-  buildingPrefab: {fileID: 22959491660590847, guid: d1b7e982e9585374ca154f658a53ac97, type: 3}
+  buildingPrefab: {fileID: 0}
   Units:
-    basicUnits:
-    - {fileID: 11400000, guid: 466cd1803090cc541be85b45713ae950, type: 2}
+    basicUnits: []
   baseStats:
-    health: 400
-    armor: 10
-    attack: 15
-    atkSpeed: 1.75
+    health: 0
+    armor: 0
+  turretStats:
+    health: 100
+    armor: 0
+    attack: 0
+    atkSpeed: 0
+    rotationSpeed: 0
