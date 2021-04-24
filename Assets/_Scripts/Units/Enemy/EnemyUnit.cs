@@ -62,7 +62,7 @@ namespace AvatarRTS.Units.Enemy
         {
             if (atkCooldown <= 0 && distance <= baseStats.atkRange + 1)
             {
-                aggroUnit.TakeDamage(baseStats.attack);
+                aggroUnit.TakeDamage(((UnitStatTypes.Offensive)baseStats).damage);
                 atkCooldown = baseStats.atkSpeed;
             }
         }

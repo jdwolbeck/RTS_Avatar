@@ -14,6 +14,9 @@ namespace AvatarRTS.Units.Player
         private Transform aggroTarget;
         private UnitStatDisplay aggroUnit;
         public bool hasAggro = false;
+        private Transform healTarget;
+        private UnitStatDisplay healUnit;
+        public bool healTargetSet = false;
         public float atkCooldown;
         private float distance;
 
@@ -29,7 +32,7 @@ namespace AvatarRTS.Units.Player
                 atkCooldown -= Time.deltaTime;
             }
 
-            if(hasAggro)
+            if (hasAggro)
             {
                 if (aggroTarget != null)
                 {
@@ -38,10 +41,21 @@ namespace AvatarRTS.Units.Player
                 MoveToAggroTarget();
                 Attack();
             }
+            if (healTargetSet)
+            {
+                if (healTarget != null)
+                {
+                    distance = Vector3.Distance(healTarget.position, transform.position);
+                }
+                MoveToHealTarget();
+                HealTarget();
+            }
         }
 
         public void MoveUnit(Vector3 _destination)
         {
+            hasAggro = false;
+            healTargetSet = false;
             navAgent.SetDestination(_destination);
         }
 
@@ -53,6 +67,17 @@ namespace AvatarRTS.Units.Player
                 aggroTarget = target;
                 aggroUnit = target.gameObject.GetComponentInChildren<UnitStatDisplay>();
                 hasAggro = true;
+            }
+        }
+
+        public void HandleUnitHeal(Transform target)
+        {
+            if (target != null)
+            {
+                DebugHandler.Print($"Healer target aquired ({target.ToString()})");
+                healTarget = target;
+                healUnit = target.gameObject.GetComponentInChildren<UnitStatDisplay>();
+                healTargetSet = true;
             }
         }
 
@@ -83,7 +108,40 @@ namespace AvatarRTS.Units.Player
         {
             if (atkCooldown <= 0 && distance <= baseStats.atkRange + 1)
             {
-                aggroUnit.TakeDamage(baseStats.attack);
+                aggroUnit.TakeDamage(((UnitStatTypes.Offensive)baseStats).damage);
+                atkCooldown = baseStats.atkSpeed;
+            }
+        }
+
+        private void MoveToHealTarget()
+        {
+
+            if (healTarget == null)
+            {
+                navAgent.SetDestination(transform.position);
+                healTargetSet = false;
+            }
+            else
+            {
+                navAgent.stoppingDistance = (baseStats.atkRange + 1);
+
+                if (distance <= baseStats.aggroRange)
+                {
+                    navAgent.SetDestination(healTarget.position);
+                }
+                else
+                {
+                    navAgent.SetDestination(healTarget.position);
+                }
+            }
+        }
+
+        private void HealTarget()
+        {
+            if ((atkCooldown <= 0) && (distance <= baseStats.atkRange + 1) 
+                && ((healUnit.currentHealth + ((UnitStatTypes.Healer)baseStats).healAmount) <= healUnit.maxHealth))
+            {
+                healUnit.Heal(((UnitStatTypes.Healer)baseStats).healAmount);
                 atkCooldown = baseStats.atkSpeed;
             }
         }
