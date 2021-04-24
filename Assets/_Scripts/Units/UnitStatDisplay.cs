@@ -49,6 +49,15 @@ namespace AvatarRTS.Units
             currentHealth -= totalDamage;
         }
 
+        public void Heal (float healAmount)
+        {
+            currentHealth += healAmount;
+            if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+        }
+
         private void HandleHealth()
         {
             Camera camera = Camera.main;

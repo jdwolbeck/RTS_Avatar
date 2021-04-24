@@ -97,7 +97,14 @@ namespace AvatarRTS.InputManager
                             foreach (Transform unit in selectedUnits)
                             {
                                 PlayerUnit playerUnit = unit.gameObject.GetComponent<PlayerUnit>();
-                                playerUnit.MoveUnit(hit.point);
+                                if (playerUnit.baseStats is Units.UnitStatTypes.Healer)
+                                {
+                                    playerUnit.HandleUnitHeal(hit.transform);
+                                }
+                                else
+                                {
+                                    playerUnit.MoveUnit(hit.point);
+                                }
                             }
                             break;
                         case 9: //Enemy Units Layer
@@ -105,7 +112,14 @@ namespace AvatarRTS.InputManager
                             foreach (Transform unit in selectedUnits)
                             {
                                 PlayerUnit playerUnit = unit.gameObject.GetComponent<PlayerUnit>();
-                                playerUnit.HandleUnitAttack(hit.transform);
+                                if (playerUnit.baseStats is Units.UnitStatTypes.Offensive)
+                                {
+                                    playerUnit.HandleUnitAttack(hit.transform);
+                                }
+                                else
+                                {
+                                    playerUnit.MoveUnit(hit.point);
+                                }
                             }
                             break;
                         default:

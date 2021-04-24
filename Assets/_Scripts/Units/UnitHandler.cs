@@ -9,9 +9,6 @@ namespace AvatarRTS.Units
     {
         public static UnitHandler instance;
 
-        [SerializeField]
-        private BasicUnit worker, warrior, healer;
-        [SerializeField]
         public LayerMask pUnitLayer, eUnitLayer;
 
         private void Awake()
@@ -27,25 +24,18 @@ namespace AvatarRTS.Units
 
         public UnitStatTypes.Base GetBasicUnitStats(string type)
         {
-            BasicUnit unit;
-
             switch (type)
             {
                 case "worker":
-                    unit = worker;
-                    break;
+                    return new UnitStatTypes.Worker();
                 case "warrior":
-                    unit = warrior;
-                    break;
+                    return new UnitStatTypes.Warrior();
                 case "healer":
-                    unit = healer;
-                    break;
+                    return new UnitStatTypes.Healer();
                 default:
                     DebugHandler.Print($"Unit Type: {type} could not be found or does not exist!");
                     return null;
             }
-
-            return unit.baseStats;
         }
     }
 }
