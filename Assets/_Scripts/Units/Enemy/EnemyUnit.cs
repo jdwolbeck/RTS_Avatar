@@ -22,7 +22,6 @@ namespace AvatarRTS.Units.Enemy
         {
             navAgent = gameObject.GetComponent<NavMeshAgent>();
         }
-
         private void Update()
         {
             if (atkCooldown > 0)
@@ -36,10 +35,7 @@ namespace AvatarRTS.Units.Enemy
             }
             else
             {
-                if (aggroTarget != null)
-                {
-                    distance = Vector3.Distance(aggroTarget.position, transform.position);
-                }
+                CalculateDistance();
                 MoveToAggroTarget();
                 Attack();
             }  
@@ -60,7 +56,6 @@ namespace AvatarRTS.Units.Enemy
                 }
             }
         }
-
         private void Attack()
         {
             if (atkCooldown <= 0 && distance <= baseStats.atkRange + 1)
@@ -69,7 +64,6 @@ namespace AvatarRTS.Units.Enemy
                 atkCooldown = baseStats.atkSpeed;
             }
         }
-
         private void MoveToAggroTarget()
         {
             if (aggroTarget == null)
@@ -85,6 +79,13 @@ namespace AvatarRTS.Units.Enemy
                 {
                     navAgent.SetDestination(aggroTarget.position);
                 }
+            }
+        }
+        private void CalculateDistance()
+        {
+            if (aggroTarget != null)
+            {
+                distance = Vector3.Distance(aggroTarget.position, transform.position);
             }
         }
     }

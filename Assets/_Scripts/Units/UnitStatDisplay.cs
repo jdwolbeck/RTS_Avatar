@@ -68,7 +68,7 @@ namespace AvatarRTS.Units
         {
             if (isPlayerUnit)
             {
-                InputManager.InputHandler.instance.selectedUnits.Remove(gameObject.transform);
+                InputManager.InputHandler.instance.selectedUnits.Remove(gameObject.transform.parent.transform);
                 Destroy(gameObject.transform.parent.gameObject);
             }
             else
