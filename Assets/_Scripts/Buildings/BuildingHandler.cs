@@ -25,7 +25,7 @@ namespace AvatarRTS.Buildings
                     building = barracks;
                     break;
                 default:
-                    Debug.Log($"Building Type: {type} could not be found or does not exist!");
+                    DebugHandler.Print($"Building Type: {type} could not be found or does not exist!");
                     return null;
             }
 

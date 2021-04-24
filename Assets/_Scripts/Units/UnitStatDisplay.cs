@@ -23,7 +23,6 @@ namespace AvatarRTS.Units
             }
             catch(Exception)
             {
-                Debug.Log("No Player Unit, trying Enemy Unit...");
                 try
                 {
                     maxHealth = gameObject.GetComponentInParent<Enemy.EnemyUnit>().baseStats.health;
@@ -59,7 +58,7 @@ namespace AvatarRTS.Units
 
             if (currentHealth <= 0)
             {
-                Debug.Log($"We died ({gameObject.transform.parent.gameObject.ToString()})!");
+                DebugHandler.Print($"We died ({gameObject.transform.parent.gameObject.ToString()})!");
                 Die();
             }
         }
@@ -68,7 +67,7 @@ namespace AvatarRTS.Units
         {
             if (isPlayerUnit)
             {
-                InputManager.InputHandler.instance.selectedUnits.Remove(gameObject.transform);
+                InputManager.InputHandler.instance.selectedUnits.Remove(gameObject.transform.parent.transform);
                 Destroy(gameObject.transform.parent.gameObject);
             }
             else

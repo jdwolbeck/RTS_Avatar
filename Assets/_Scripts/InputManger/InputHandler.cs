@@ -91,11 +91,22 @@ namespace AvatarRTS.InputManager
 
                     switch (layerHit.value)
                     {
-                        case 8: //Player Units Layer
-                            //do something
+                        case 8: //Interactables Layer
+                            //Determine which object was right clicked here and based on the unit clicking do a certain action
+                            //for now, just move to whatever interactable object is there.
+                            foreach (Transform unit in selectedUnits)
+                            {
+                                PlayerUnit playerUnit = unit.gameObject.GetComponent<PlayerUnit>();
+                                playerUnit.MoveUnit(hit.point);
+                            }
                             break;
                         case 9: //Enemy Units Layer
                             //Attack / set as target
+                            foreach (Transform unit in selectedUnits)
+                            {
+                                PlayerUnit playerUnit = unit.gameObject.GetComponent<PlayerUnit>();
+                                playerUnit.HandleUnitAttack(hit.transform);
+                            }
                             break;
                         default:
                             //isDragging = true;
