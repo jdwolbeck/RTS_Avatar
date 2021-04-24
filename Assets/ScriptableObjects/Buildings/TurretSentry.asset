@@ -19,7 +19,7 @@ MonoBehaviour:
     basicUnits:
     - {fileID: 11400000, guid: 466cd1803090cc541be85b45713ae950, type: 2}
   baseStats:
-    health: 300
+    health: 350
     armor: 10
     attack: 15
     atkSpeed: 1.75
