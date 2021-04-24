@@ -1,15 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace AvatarRTS.Buildings
 {
     public class BuildingHandler : MonoBehaviour
     {
         public static BuildingHandler instance;
-
-        [SerializeField]
-        private BasicBuilding barracks, turretSentry;
 
         private void Awake()
         {
@@ -18,21 +16,16 @@ namespace AvatarRTS.Buildings
 
         public BuildingStatTypes.Base GetBasicBuildingStats(string type)
         {
-            BasicBuilding building;
             switch (type)
             {
                 case "barrack":
-                    building = barracks;
-                    break;
+                    return new BuildingStatTypes.Base();
                 case "turretsentr":
-                    building = turretSentry;
-                    break;
+                    return new BuildingStatTypes.Sentry();
                 default:
                     DebugHandler.Print($"Building Type: {type} could not be found or does not exist!");
                     return null;
             }
-
-            return building.baseStats;
         }
     }
 }

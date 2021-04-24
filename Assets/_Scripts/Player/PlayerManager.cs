@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using AvatarRTS.InputManager;
+using static AvatarRTS.Buildings.BasicBuilding;
 
 namespace AvatarRTS.Player
 {
@@ -54,12 +55,26 @@ namespace AvatarRTS.Player
                     {
                         Buildings.Player.PlayerBuilding pB = tf.GetComponent<Buildings.Player.PlayerBuilding>();
                         pB.baseStats = Buildings.BuildingHandler.instance.GetBasicBuildingStats(name);
+                        pB.bType = NameToType(name);
                     }
 
                     //if we have any upgrades - add themnow
                     //add up
                 }
             }
+        }
+
+        public buildingType NameToType(string name)
+        {
+            switch (name)
+            {
+                case "turretsentr":
+                    return buildingType.TurretSentry;
+                case "barrack":
+                    return buildingType.Barracks;
+            }
+
+            return buildingType.Unknown;
         }
     }
 }
