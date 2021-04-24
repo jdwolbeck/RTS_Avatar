@@ -9,22 +9,15 @@ namespace AvatarRTS.Buildings
     {
         public enum buildingType
         {
+            Unknown,
             Barracks,
             TurretSentry
         }
-
-        [Space(15)]
-        [Header("Building Settings")]
 
         public buildingType type;
         public new string name;
         public GameObject buildingPrefab;
         public BuildingActions.BuildingUnits Units;
-
-        [Space(15)]
-        [Header("Building Base Stats")]
-        [Space(40)]
-
         public BuildingStatTypes.Base baseStats;
     }
 }
