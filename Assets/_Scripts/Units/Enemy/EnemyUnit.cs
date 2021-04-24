@@ -47,7 +47,8 @@ namespace AvatarRTS.Units.Enemy
 
             for (int i = 0; i < rangeColliders.Length; i++)
             {
-                if (rangeColliders[i].gameObject.layer == UnitHandler.instance.pUnitLayer)
+                if (rangeColliders[i].gameObject.layer == UnitHandler.instance.pUnitLayer && 
+                    Vector3.Distance(rangeColliders[i].gameObject.transform.position, transform.position) <= baseStats.aggroRange)
                 {
                     aggroTarget = rangeColliders[i].gameObject.transform;
                     aggroUnit = aggroTarget.gameObject.GetComponentInChildren<UnitStatDisplay>();
