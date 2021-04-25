@@ -18,7 +18,7 @@ namespace AvatarRTS.Buildings.Player
             {
                 case buildingType.TurretSentry:
                     Rotate();
-                    Attack();
+                    //Attack();
                     break;
             }
         }
