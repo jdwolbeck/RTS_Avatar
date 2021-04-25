@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2777694338272807088}
   - component: {fileID: 1117787818765384553}
   - component: {fileID: 819293134185527248}
-  - component: {fileID: 3940784136616893259}
   - component: {fileID: 954320430702713479}
+  - component: {fileID: 2797192469423740079}
   m_Layer: 8
   m_Name: Turret
   m_TagString: Untagged
@@ -98,19 +98,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3940784136616893259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 22959491660590847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 009ac7ad32fbc0d48941cdbea3af9a0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bType: 0
 --- !u!114 &954320430702713479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,6 +112,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInteracting: 0
   highlight: {fileID: 5927403816137296387}
+--- !u!114 &2797192469423740079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22959491660590847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c05204f0f80eaca478bfb7023fc016d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildingType: 0
+  Name: 
+  BuildingPrefab: {fileID: 0}
+  Health: 500
+  Armor: 1
+  Attack: 15
+  AtkSpeed: 1
+  ProjectileSpeed: 20
+  RotationSpeed: 0.15
 --- !u!1 &5927403816137296387
 GameObject:
   m_ObjectHideFlags: 0
