@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static AvatarRTS.Buildings.BuildingHandler;
 
 namespace AvatarRTS.Buildings
 {
@@ -9,6 +10,7 @@ namespace AvatarRTS.Buildings
     {
         public TurretSentryBuilding()
         {
+            BuildingType = BuildingTypeEnum.TurretSentry;
             RotationSpeed += 0.1f;
         }
     }

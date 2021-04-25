@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 namespace AvatarRTS.Buildings
 {
-    public class BuildingHandler : MonoBehaviour
+    public class BuildingHandler : HandlerBase
     {
         public static BuildingHandler instance;
 
@@ -13,5 +13,39 @@ namespace AvatarRTS.Buildings
         {
             instance = this;
         }
+
+        private void Start()
+        {
+            SetScene();
+        }
+        private void SetScene()
+        {
+            //Place a predefined set of Buildings
+            CreateBuilding(TeamEnum.player, BuildingTypeEnum.Barracks, new Vector3(20, 0, 0), Quaternion.identity);
+            CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretSentry, new Vector3(18, 0, 5), Quaternion.identity);
+        }
+        private void CreateBuilding(TeamEnum team, BuildingTypeEnum type, Vector3 position, Quaternion rotation)
+        {
+            Transform unitFolder;
+            GameObject prefab, unitObject;
+
+            prefab = Resources.Load("Prefabs/" + type.ToString(), typeof(GameObject)) as GameObject;
+            unitObject = Instantiate(prefab, position, rotation);
+
+            //TODO Logic for building health bars
+            //unitStatDisplay = prefab.transform.GetComponentInChildren<UnitStatDisplay>();
+            //unitStatDisplay.InitializeUnitStatDisplay();
+
+            unitFolder = GameObject.FindWithTag(StringCapitolizeFirstLetter(team.ToString()) + " Buildings").transform;
+            
+            unitObject.name = prefab.name;
+            unitObject.transform.SetParent(unitFolder);
+        }
+    }
+    public enum BuildingTypeEnum
+    {
+        Unknown,
+        Barracks,
+        TurretSentry
     }
 }
