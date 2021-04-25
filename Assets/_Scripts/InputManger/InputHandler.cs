@@ -187,7 +187,7 @@ namespace AvatarRTS.InputManager
                     selectedBuilding.GetComponent<Interactables.IBuilding>().OnInteractExit();
                     selectedBuilding = null;
                 }
-
+                
                 selectedUnits.Add(iUnit.gameObject.transform);
 
                 iUnit.OnInteractEnter();

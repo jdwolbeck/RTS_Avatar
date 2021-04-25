@@ -15,13 +15,18 @@ namespace AvatarRTS.Units
         // Start is called before the first frame update
         void Start()
         {
+            InitializeUnitStatDisplay();
+        }
+
+        public void InitializeUnitStatDisplay()
+        {
             try
             {
                 maxHealth = gameObject.GetComponentInParent<Player.PlayerUnit>().baseStats.health;
                 armor = gameObject.GetComponentInParent<Player.PlayerUnit>().baseStats.armor;
                 isPlayerUnit = true;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 try
                 {
