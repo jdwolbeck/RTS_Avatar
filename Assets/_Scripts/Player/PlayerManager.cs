@@ -52,9 +52,9 @@ namespace AvatarRTS.Player
                     }
                     else if (type == playerBuildings)
                     {
-                        Buildings.Player.PlayerBuilding pB = tf.GetComponent<Buildings.Player.PlayerBuilding>();
-                        pB.baseStats = Buildings.BuildingHandler.instance.GetBasicBuildingStats(name);
-                        pB.bType = NameToType(name);
+                        //Buildings.Player.PlayerBuilding pB = tf.GetComponent<Buildings.Player.PlayerBuilding>();
+                        //pB.baseStats = Buildings.BuildingHandler.instance.GetBasicBuildingStats(name);
+                        //pB.bType = NameToType(name);
                     }
 
                     //if we have any upgrades - add themnow

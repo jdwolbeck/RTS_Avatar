@@ -4,8 +4,7 @@ using UnityEngine;
 
 namespace AvatarRTS.Buildings
 {
-    [CreateAssetMenu(fileName = "Building", menuName = "New Building/Basic")]
-    public class BasicBuilding : ScriptableObject
+    public class BasicBuilding : MonoBehaviour
     {
         public enum buildingType
         {
@@ -14,10 +13,12 @@ namespace AvatarRTS.Buildings
             TurretSentry
         }
 
-        public buildingType type;
-        public new string name;
-        public GameObject buildingPrefab;
-        public BuildingActions.BuildingUnits Units;
-        public BuildingStatTypes.Base baseStats;
+        public buildingType BuildingType;
+        public string Name;
+        public GameObject BuildingPrefab;
+
+        //Basic Building Stats
+        public float Health = 2500,
+             Armor = 5;
     }
 }
