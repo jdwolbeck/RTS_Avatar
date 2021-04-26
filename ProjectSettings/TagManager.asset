@@ -12,6 +12,8 @@ TagManager:
   - Enemy Workers
   - Enemy Warriors
   - Enemy Healers
+  - Player Buildings
+  - Enemy Buildings
   layers:
   - Default
   - TransparentFX

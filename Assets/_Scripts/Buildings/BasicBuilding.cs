@@ -4,21 +4,16 @@ using UnityEngine;
 
 namespace AvatarRTS.Buildings
 {
-    public class BasicBuilding : MonoBehaviour
+    public class BasicBuilding : BasicObject
     {
-        public enum buildingType
-        {
-            Unknown,
-            Barracks,
-            TurretSentry
-        }
-
-        public buildingType BuildingType;
+        public BuildingTypeEnum BuildingType;
         public string Name;
         public GameObject BuildingPrefab;
 
-        //Basic Building Stats
-        public float Health = 2500,
-             Armor = 5;
+        public BasicBuilding()
+        {
+            Health = 2500;
+            Armor = 5;
+        }
     }
 }
