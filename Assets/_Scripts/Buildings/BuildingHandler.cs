@@ -12,6 +12,7 @@ namespace AvatarRTS.Buildings
         private void Awake()
         {
             instance = this;
+            Debug.Log($"{gameObject.ToString()} Building handler");
         }
 
         private void Start()
@@ -21,8 +22,8 @@ namespace AvatarRTS.Buildings
         private void SetScene()
         {
             //Place a predefined set of Buildings
-            CreateBuilding(TeamEnum.player, BuildingTypeEnum.Barracks, new Vector3(20, 0, 0), Quaternion.identity);
-            CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretSentry, new Vector3(18, 0, 5), Quaternion.identity);
+            CreateBuilding(TeamEnum.player, BuildingTypeEnum.Barracks, new Vector3(20, 1f, 0), Quaternion.identity);
+            CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretSentry, new Vector3(18, 1, 5), Quaternion.identity);
         }
         private void CreateBuilding(TeamEnum team, BuildingTypeEnum type, Vector3 position, Quaternion rotation)
         {
@@ -35,11 +36,10 @@ namespace AvatarRTS.Buildings
             //TODO Logic for building health bars
             //unitStatDisplay = prefab.transform.GetComponentInChildren<UnitStatDisplay>();
             //unitStatDisplay.InitializeUnitStatDisplay();
-
-            unitFolder = GameObject.FindWithTag(StringCapitolizeFirstLetter(team.ToString()) + " Buildings").transform;
-            
-            unitObject.name = prefab.name;
+            unitFolder = GameObject.FindWithTag(StringCapitolizeFirstLetter(team.ToString()) + "Buildings").transform;
+                
             unitObject.transform.SetParent(unitFolder);
+            unitObject.name = prefab.name;
         }
     }
     public enum BuildingTypeEnum

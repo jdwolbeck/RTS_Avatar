@@ -95,10 +95,10 @@ GameObject:
   - component: {fileID: 529497461536689825}
   - component: {fileID: 2523777008140856914}
   - component: {fileID: -4461219976758775249}
-  - component: {fileID: 1464019851982959005}
   - component: {fileID: 7646018786651879626}
-  m_Layer: 8
-  m_Name: humanUnit
+  - component: {fileID: 3116617954529049151}
+  m_Layer: 0
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,7 +147,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 163a167d55e4c614d908cef50e88f772, type: 2}
+  - {fileID: 2100000, guid: f8161d0e9ccaffc45a475214977fbfdc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -204,26 +204,6 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1464019851982959005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8035226579267388245}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a4f637f0da98bc44843d7a61cb58641, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseStats:
-    cost: 0
-    attack: 0
-    atkRange: 0
-    atkSpeed: 0
-    health: 0
-    armor: 0
-    aggroRange: 0
 --- !u!114 &7646018786651879626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,6 +218,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInteracting: 0
   highlight: {fileID: 4232662398490152978}
+--- !u!114 &3116617954529049151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8035226579267388245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de08181543b101a44a544421b2e01b90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Team: 0
+  Cost: 50
+  Health: 85
+  Armor: 0
+  HealthBar: {fileID: 0}
+  UnitType: 0
+  Name: 
+  HumanPrefab: {fileID: 0}
+  InfectedPrefab: {fileID: 0}
+  AttackSpeed: 2
+  AttackRange: 2
+  AggroRange: 10
+  Damage: 10
 --- !u!1001 &7398296072767191505
 PrefabInstance:
   m_ObjectHideFlags: 0

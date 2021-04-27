@@ -4,16 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Player Units
-  - Enemy Units
-  - Player Workers
-  - Player Warriors
-  - Player Healers
-  - Enemy Workers
-  - Enemy Warriors
-  - Enemy Healers
-  - Player Buildings
-  - Enemy Buildings
+  - PlayerBuildings
+  - PlayerUnits
+  - EnemyBuildings
+  - EnemyUnits
   layers:
   - Default
   - TransparentFX

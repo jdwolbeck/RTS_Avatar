@@ -18,7 +18,8 @@ namespace AvatarRTS.Buildings
 
         public TurretBuilding()
         {
-            Health = 500;
+            Cost = 250;
+            MaxHealth = 500;
             Armor = 1;
         }
 

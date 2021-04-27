@@ -2,115 +2,88 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using AvatarRTS.InputManager;
 
 namespace AvatarRTS.Units
 {
+    public enum UnitTypeEnum
+    {
+        Worker,
+        Warrior,
+        Healer
+    };
+
     public class UnitHandler : HandlerBase
     {
         public static UnitHandler instance;
-        public LayerMask pUnitLayer, eUnitLayer;
+        public LayerMask InteractablesLayer, EnemyUnitsLayer;
+        public List<GameObject> unitList;
 
         private void Awake()
         {
             instance = this;
-            Debug.Log($"Unit handler {this.gameObject.ToString()}");
+            unitList = new List<GameObject>();
         }
 
         private void Start()
         {
-            pUnitLayer = LayerMask.NameToLayer("Interactables");
-            eUnitLayer = LayerMask.NameToLayer("EnemyUnits");
+            InteractablesLayer = LayerMask.NameToLayer("Interactables");
+            EnemyUnitsLayer = LayerMask.NameToLayer("EnemyUnits");
 
             SetScene();
+        }
+
+        private void Update()
+        {
+            InputHandler.instance.HandleUnitMovement();
         }
 
         private void SetScene()
         {
             // Place a predefined set of Player Units
-            CreateUnit(TeamEnum.player, UnitTypeEnum.healer, new Vector3(2, 0, 5), Quaternion.identity);
+            CreateUnit(TeamEnum.player, UnitTypeEnum.Worker, new Vector3(8, 0, -2), Quaternion.identity);
+            CreateUnit(TeamEnum.player, UnitTypeEnum.Warrior, new Vector3(8, 0, 2), Quaternion.identity);
+            CreateUnit(TeamEnum.player, UnitTypeEnum.Healer, new Vector3(10, 0, 0), Quaternion.identity);
 
             //Place a predefined set of Enemy Units
-        }
-
-        //This concept needs to go away. No more UnitStatTypes class
-        public UnitStatTypes.Base GetBasicUnitStats(string type)
-        {
-            switch (type)
-            {
-                case "worker":
-                    return new UnitStatTypes.Worker();
-                case "warrior":
-                    return new UnitStatTypes.Warrior();
-                case "healer":
-                    return new UnitStatTypes.Healer();
-                default:
-                    DebugHandler.Print($"Unit Type: {type} could not be found or does not exist!");
-                    return null;
-            }
+            CreateUnit(TeamEnum.enemy, UnitTypeEnum.Warrior, new Vector3(-8, 0, 0), Quaternion.identity);
         }
 
         public void CreateUnit(TeamEnum team, UnitTypeEnum type, Vector3 position, Quaternion rotation)
         {
-            Transform unitFolder;
-            string teamString;
-            GameObject prefab, unitObject;
-            UnitStatDisplay unitStatDisplay;
-            Units.Player.PlayerUnit playerUnit;
-            Units.Enemy.EnemyUnit enemyUnit;
-
-            //Obtain the correct prefab based on the team
-            switch (team)
+            try
             {
-                case TeamEnum.player:
-                    teamString = "Player ";
-                    prefab = Resources.Load("Prefabs/humanUnit", typeof(GameObject)) as GameObject;
-                    unitObject = Instantiate(prefab, position, rotation);
-                    playerUnit = prefab.transform.GetComponent<Units.Player.PlayerUnit>();
-                    playerUnit.baseStats = GetBasicUnitStats(type.ToString());
-                    break;
-                case TeamEnum.enemy:
-                    teamString = "Enemy ";
-                    prefab = Resources.Load("Prefabs/infectedUnit", typeof(GameObject)) as GameObject;
-                    unitObject = Instantiate(prefab, position, rotation);
-                    enemyUnit = prefab.transform.GetComponent<Units.Enemy.EnemyUnit>();
-                    enemyUnit.baseStats = GetBasicUnitStats(type.ToString());
-                    break;
-                default:
-                    DebugHandler.Print($"Team enum {team} not defined!");
-                    return;
+                Transform unitFolder;
+                GameObject prefab, unitObject;
+                Material newMat;
+
+                DebugHandler.Print($"Creating {team.ToString()} unit of type {type.ToString()}");
+                prefab = Resources.Load("Prefabs/" + StringCapitolizeFirstLetter(type.ToString()), typeof(GameObject)) as GameObject;
+                newMat = Resources.Load("Materials/" + team.ToString() + "UnitMat", typeof(Material)) as Material;
+                
+                unitObject = Instantiate(prefab, position, rotation);
+                unitObject.GetComponent<Renderer>().material = newMat;
+                unitObject.GetComponent<BasicObject>().Team = team;
+                unitObject.GetComponent<BasicObject>().InitializeObject();
+                unitObject.name = prefab.name;
+                unitFolder = GameObject.FindWithTag(StringCapitolizeFirstLetter(team.ToString()) + "Units").transform;
+                unitObject.transform.SetParent(unitFolder);
+
+                if (team == TeamEnum.player)
+                {
+                    unitObject.layer = InteractablesLayer;
+                }
+                else
+                {
+                    unitObject.layer = EnemyUnitsLayer;
+                }
+
+                unitList.Add(unitObject);
             }
-
-            //Spawn in the prefab GameObject at the specific location/rotation
-
-            unitStatDisplay = prefab.transform.GetComponentInChildren<UnitStatDisplay>();
-            unitStatDisplay.InitializeUnitStatDisplay();
-
-            //Based on the type of unit we are creating, put it in the right folder and give it its stats.
-            switch (type)
+            catch (Exception e)
             {
-                case UnitTypeEnum.worker:
-                    unitFolder = GameObject.FindWithTag(teamString + "Workers").transform;
-                    break;
-                case UnitTypeEnum.warrior:
-                    unitFolder = GameObject.FindWithTag(teamString + "Warriors").transform;
-                    break;
-                case UnitTypeEnum.healer:
-                    unitFolder = GameObject.FindWithTag(teamString + "Healers").transform;
-                    break;
-                default:
-                    DebugHandler.Print($"Type enum {type} not defined!");
-                    return;
+                Debug.Log(e.Message + Environment.NewLine + e.StackTrace);
             }
-
-            unitObject.name = prefab.name;
-            unitObject.transform.SetParent(unitFolder);
         }
     }
-
-    public enum UnitTypeEnum
-    {
-        worker,
-        warrior,
-        healer
-    };
 }

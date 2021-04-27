@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using AvatarRTS.Units.Player;
+using AvatarRTS.Units;
+using AvatarRTS.Buildings;
 
 namespace AvatarRTS.InputManager
 {
@@ -20,7 +21,6 @@ namespace AvatarRTS.InputManager
             instance = this;
         }
 
-        // Start is called before the first frame update
         private void Start()
         {
         }
@@ -47,13 +47,15 @@ namespace AvatarRTS.InputManager
                 //Check if we hit something
                 if (Physics.Raycast(ray, out hit, 100, interactableLayer))
                 {
-                    if (AddedUnit(hit.transform, Input.GetKey(KeyCode.LeftShift)))
+                    if (hit.transform.GetComponent<BasicObject>() is BasicUnit)
                     {
                         // be able to do stuff with units
+                        TargetUnit(hit.transform.gameObject, Input.GetKey(KeyCode.LeftShift));
                     }
-                    else if (AddedBuilding(hit.transform))
+                    else if (hit.transform.GetComponent<BasicObject>() is BasicBuilding)
                     {
                         // be able to do stuff with buildings
+                        TargetBuilding(hit.transform.gameObject);
                     }
                 }
                 else
@@ -65,14 +67,11 @@ namespace AvatarRTS.InputManager
 
             if (Input.GetMouseButtonUp(0))
             {
-                foreach (Transform child in Player.PlayerManager.instance.playerUnits)
+                foreach (GameObject unit in Units.UnitHandler.instance.unitList)
                 {
-                    foreach (Transform unit in child)
+                    if (unit.layer == UnitHandler.instance.InteractablesLayer && IsWithinSelectionBounds(unit))
                     {
-                        if (IsWithinSelectionBounds(unit))
-                        {
-                            AddedUnit(unit, true);
-                        }
+                        TargetUnit(unit, true);
                     }
                 }
                 isDragging = false;
@@ -87,49 +86,24 @@ namespace AvatarRTS.InputManager
                 if (Physics.Raycast(ray, out hit))
                 {
                     //If we do, then do something with that data
-                    LayerMask layerHit = hit.transform.gameObject.layer;
-
-                    switch (layerHit.value)
+                    try
                     {
-                        case 8: //Interactables Layer
-                            //Determine which object was right clicked here and based on the unit clicking do a certain action
-                            //for now, just move to whatever interactable object is there.
-                            foreach (Transform unit in selectedUnits)
+                        foreach (Transform unit in selectedUnits)
+                        {
+                            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Interactables") ||
+                            hit.transform.gameObject.layer == LayerMask.NameToLayer("EnemyUnits"))
                             {
-                                PlayerUnit playerUnit = unit.gameObject.GetComponent<PlayerUnit>();
-                                if (playerUnit.baseStats is Units.UnitStatTypes.Healer)
-                                {
-                                    playerUnit.HandleUnitHeal(hit.transform);
-                                }
-                                else
-                                {
-                                    playerUnit.MoveUnit(hit.point);
-                                }
+                                unit.GetComponent<BasicObject>().HandlePlayerAction(hit);
                             }
-                            break;
-                        case 9: //Enemy Units Layer
-                            //Attack / set as target
-                            foreach (Transform unit in selectedUnits)
+                            else
                             {
-                                PlayerUnit playerUnit = unit.gameObject.GetComponent<PlayerUnit>();
-                                if (playerUnit.baseStats is Units.UnitStatTypes.Offensive)
-                                {
-                                    playerUnit.HandleUnitAttack(hit.transform);
-                                }
-                                else
-                                {
-                                    playerUnit.MoveUnit(hit.point);
-                                }
+                                unit.gameObject.GetComponent<BasicUnit>().MoveUnit(hit.point);
                             }
-                            break;
-                        default:
-                            //isDragging = true;
-                            foreach (Transform unit in selectedUnits)
-                            {
-                                PlayerUnit playerUnit = unit.gameObject.GetComponent<PlayerUnit>();
-                                playerUnit.MoveUnit(hit.point);
-                            }
-                            break;
+                        }
+                    }
+                    catch (System.Exception e)
+                    {
+                        Debug.Log($"{e.Message}    -     {e.StackTrace}");
                     }
                 }
             }
@@ -149,7 +123,7 @@ namespace AvatarRTS.InputManager
             selectedUnits.Clear();
         }
 
-        private bool IsWithinSelectionBounds(Transform tf)
+        private bool IsWithinSelectionBounds(GameObject obj)
         {
             //if were not dragging, this shouldnt be called
             if (!isDragging)
@@ -160,7 +134,7 @@ namespace AvatarRTS.InputManager
             Camera cam = Camera.main;
             Bounds viewPortBounds = Multiselect.GetViewPortBounds(cam, mousePos, Input.mousePosition);
 
-            return viewPortBounds.Contains(cam.WorldToViewportPoint(tf.position));
+            return viewPortBounds.Contains(cam.WorldToViewportPoint(obj.transform.position));
         }
 
         private bool HaveSelectedUnits()
@@ -173,9 +147,9 @@ namespace AvatarRTS.InputManager
             return false;
         }
 
-        private Interactables.IUnit AddedUnit(Transform tf, bool canMultiselect = false)
+        private Interactables.IUnit TargetUnit(GameObject obj, bool canMultiselect = false)
         {
-            Interactables.IUnit iUnit = tf.GetComponent<Interactables.IUnit>();
+            Interactables.IUnit iUnit = obj.GetComponent<Interactables.IUnit>();
             if (iUnit != null)
             {
                 if (!canMultiselect)
@@ -196,15 +170,17 @@ namespace AvatarRTS.InputManager
             }
             else
             {
+                Debug.Log($"iUnit was null when selecting unit with TargetUnit() function");
                 return null;
             }
         }
 
-        private Interactables.IBuilding AddedBuilding(Transform tf)
+        private Interactables.IBuilding TargetBuilding(GameObject obj)
         {
-            Interactables.IBuilding iBuilding = tf.GetComponent<Interactables.IBuilding>();
+            Interactables.IBuilding iBuilding = obj.GetComponent<Interactables.IBuilding>();
             if (iBuilding != null)
             {
+                Debug.Log($"iBuilding script found!");
                 DeselectUnits();
                 selectedBuilding = iBuilding.gameObject.transform;
                 iBuilding.OnInteractEnter();
@@ -213,6 +189,7 @@ namespace AvatarRTS.InputManager
             }
             else
             {
+                Debug.Log($"iBuilding was null when selecting unit with TargetBuilding() function");
                 return null;
             }
         }
