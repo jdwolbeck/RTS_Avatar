@@ -10,6 +10,8 @@ namespace AvatarRTS.Units.Support
         private Transform healTarget;
         private BasicObject healUnit;
         private float distance;
+        private bool hasHealOrb = false;
+        private GameObject healOrb;
 
 
         public override void Awake()
@@ -65,7 +67,7 @@ namespace AvatarRTS.Units.Support
             }
             else
             {
-                NavAgent.stoppingDistance = (AttackRange + 1);
+                NavAgent.stoppingDistance = AttackRange;
 
                 if (distance <= AggroRange)
                 {
@@ -93,9 +95,26 @@ namespace AvatarRTS.Units.Support
             if ((HealCooldown <= 0) && (distance <= AttackRange + 1)
                 && (healUnit.CurrentHealth + HealAmount <= healUnit.MaxHealth))
             {
-                Debug.Log($"Healer healUnit (c, a, m : {healUnit.CurrentHealth}, {HealAmount}, {healUnit.MaxHealth})");
-                healUnit.Heal(HealAmount);
-                HealCooldown = AttackSpeed;
+                if (hasHealOrb && healOrb != null)
+                {
+                    if (healOrb.GetComponent<BasicProjectile>().HasReachedTarget() == true)
+                    {
+                        //Destroy our orb and heal the target
+                        Destroy(healOrb);
+                        hasHealOrb = false;
+
+                        Debug.Log($"Healer healUnit (c, a, m : {healUnit.CurrentHealth}, {HealAmount}, {healUnit.MaxHealth})");
+                        healUnit.Heal(HealAmount);
+                        HealCooldown = AttackSpeed;
+                    }
+                }
+                else
+                {
+                    GameObject prefab = Resources.Load("Prefabs/HealerOrb", typeof(GameObject)) as GameObject;
+                    healOrb = Instantiate(prefab, transform.position, Quaternion.identity);
+                    healOrb.GetComponent<BasicProjectile>().GenerateHealOrb(healUnit.gameObject);
+                    hasHealOrb = true;
+                }
             }
         }
     }
