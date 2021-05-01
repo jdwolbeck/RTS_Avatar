@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8677240159933815124}
   - component: {fileID: 892200390035112624}
   - component: {fileID: 3581403993482431983}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: UnitIcon3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 8526846490006404113}
   - component: {fileID: 5010504527261113233}
   - component: {fileID: 4748924210824594417}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: UnitIconBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 7474346460531828797}
   - component: {fileID: 4230214038865682265}
   - component: {fileID: 4633536787386964572}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: UnitIcon1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +379,7 @@ GameObject:
   - component: {fileID: 4408351522136077287}
   - component: {fileID: 2522306385258032973}
   - component: {fileID: 9016111738925996948}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: UnitIcon5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -474,7 +474,7 @@ GameObject:
   - component: {fileID: 4234756252663513061}
   - component: {fileID: 6537105845759969784}
   - component: {fileID: 3349895323418942065}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: UnitIcon4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -569,7 +569,7 @@ GameObject:
   - component: {fileID: 837553128027982416}
   - component: {fileID: 1498637472005201948}
   - component: {fileID: 4768210419929740930}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: UnitIcon2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -916,6 +916,10 @@ PrefabInstance:
     - target: {fileID: 5862954269335869209, guid: 916eba5a4ff55844490df32985a4b51f, type: 3}
       propertyPath: m_Name
       value: UnitStatDisplay
+      objectReference: {fileID: 0}
+    - target: {fileID: 5862954269335869209, guid: 916eba5a4ff55844490df32985a4b51f, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5862954269335869209, guid: 916eba5a4ff55844490df32985a4b51f, type: 3}
       propertyPath: m_IsActive
