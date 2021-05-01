@@ -8,8 +8,9 @@ namespace AvatarRTS.Buildings
     //[CreateAssetMenu(fileName = "Building", menuName = "New Building/TurretSentry")]
     public class TurretSentryBuilding : TurretBuilding
     {
-        public TurretSentryBuilding()
+        public override void Awake()
         {
+            base.Awake();
             BuildingType = BuildingTypeEnum.TurretSentry;
             RotationSpeed += 0.1f;
         }
