@@ -60,7 +60,7 @@ namespace AvatarRTS.Buildings
                 Vector3 calcTarget = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
                 float angle = gameObject.transform.rotation.eulerAngles.y;
 
-                angle -= 90;
+                //angle -= 90;
                 angle *= Mathf.Deg2Rad;
 
                 calcTarget.x = ProjectileRange * Mathf.Sin(angle) + gameObject.transform.position.x;

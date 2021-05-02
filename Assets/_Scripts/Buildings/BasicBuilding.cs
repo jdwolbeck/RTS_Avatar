@@ -7,8 +7,8 @@ namespace AvatarRTS.Buildings
 {
     public class BasicBuilding : BasicObject
     {
-        public BuildingTypeEnum BuildingType;
-        public string Name;
+        public BuildingTypeEnum BuildingType { get; set; }
+        public string Name { get; set; }
         public GameObject BuildingPrefab;
 
         public BasicBuilding()
