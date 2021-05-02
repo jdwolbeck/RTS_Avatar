@@ -6,7 +6,6 @@ using UnityEngine.AI;
 
 namespace AvatarRTS.Buildings
 {
-    //[CreateAssetMenu(fileName = "Building", menuName = "New Building/Turret")]
     public class TurretBuilding : BasicBuilding
     {
         public float AttackDamage { get; set; }
@@ -16,37 +15,62 @@ namespace AvatarRTS.Buildings
         public float RotationSpeed { get; set; }
 
         private float atkCooldown;
+        private GameObject target;
         private GameObject bulletPrefab;
         private List<GameObject> projectiles;
+
+        public ParticleSystem GunFireParticles;
 
         public override void Awake()
         {
             base.Awake();
             Cost = 250;
-            MaxHealth = 500;
-            Armor = 1;
+            MaxHealth = 2000;
+            Armor = 5;
 
             AttackDamage = 15;
-            AtkSpeed = 0.3f;
+            AtkSpeed = 2f;
             ProjectileSpeed = 20f;
             ProjectileRange = 10f;
             RotationSpeed = 0.075f;
 
             bulletPrefab = Resources.Load("Prefabs/Bullet", typeof(GameObject)) as GameObject;
             projectiles = new List<GameObject>();
+
+            if(GunFireParticles != null)
+                GunFireParticles.Stop();
         }
 
-        public void Update()
+        protected override void Update()
         {
+            FindTarget();
             DoRotate();
             DoAttack();
             Cleanup();
         }
 
+        public void FindTarget()
+        {
+            if (target == null)
+            {
+                Collider c = CheckForEnemyTargets(ProjectileRange, true);
+
+                if (c != null)
+                {
+                    target = c.gameObject;
+                }
+            }
+        }
         public void DoRotate()
         {
-            if(RotationSpeed > 0)
+            if (target != null)
+            {
+                gameObject.transform.LookAt(target.transform);
+            }
+            else if(RotationSpeed > 0)
+            {
                 gameObject.transform.Rotate(0f, RotationSpeed, 0f, Space.Self);
+            }
         }
         public void DoAttack()
         {
@@ -55,12 +79,11 @@ namespace AvatarRTS.Buildings
                 atkCooldown -= Time.deltaTime;
             }
 
-            if (atkCooldown <= 0)
+            if (atkCooldown <= 0 && target != null)
             {
                 Vector3 calcTarget = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
                 float angle = gameObject.transform.rotation.eulerAngles.y;
 
-                //angle -= 90;
                 angle *= Mathf.Deg2Rad;
 
                 calcTarget.x = ProjectileRange * Mathf.Sin(angle) + gameObject.transform.position.x;
@@ -90,6 +113,16 @@ namespace AvatarRTS.Buildings
             projectiles.Add(bullet);
 
             atkCooldown = AtkSpeed;
+
+            if (GunFireParticles != null)
+            {
+                GunFireParticles.Stop();
+
+                var playDir = GunFireParticles.main;
+                playDir.duration = 0.2f;
+
+                GunFireParticles.Play();
+            }
         }
     }
 }

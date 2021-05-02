@@ -12,7 +12,7 @@ namespace AvatarRTS.Units
         private BasicObject aggroUnit;
         private float distance;
 
-        private void Update()
+        protected override void Update()
         {
             if (AttackCooldown > 0)
             {
