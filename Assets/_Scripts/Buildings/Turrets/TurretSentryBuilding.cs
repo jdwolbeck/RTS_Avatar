@@ -12,7 +12,7 @@ namespace AvatarRTS.Buildings
         {
             base.Awake();
             BuildingType = BuildingTypeEnum.TurretSentry;
-            RotationSpeed += 0.1f;
+            //RotationSpeed += 0.1f;
         }
     }
 }

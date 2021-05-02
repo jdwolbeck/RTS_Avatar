@@ -9,10 +9,11 @@ namespace AvatarRTS.Buildings
     //[CreateAssetMenu(fileName = "Building", menuName = "New Building/Turret")]
     public class TurretBuilding : BasicBuilding
     {
-        protected float AttackDamage = 15,
-             AtkSpeed = 1,
-             ProjectileSpeed = 20f,
-             RotationSpeed = 0.05f;
+        public float AttackDamage { get; set; }
+        public float AtkSpeed { get; set; }
+        public float ProjectileSpeed { get; set; }
+        public float ProjectileRange { get; set; }
+        public float RotationSpeed { get; set; }
 
         private float atkCooldown;
         private GameObject bulletPrefab;
@@ -24,6 +25,13 @@ namespace AvatarRTS.Buildings
             Cost = 250;
             MaxHealth = 500;
             Armor = 1;
+
+            AttackDamage = 15;
+            AtkSpeed = 0.3f;
+            ProjectileSpeed = 20f;
+            ProjectileRange = 10f;
+            RotationSpeed = 0.075f;
+
             bulletPrefab = Resources.Load("Prefabs/Bullet", typeof(GameObject)) as GameObject;
             projectiles = new List<GameObject>();
         }
@@ -49,7 +57,16 @@ namespace AvatarRTS.Buildings
 
             if (atkCooldown <= 0)
             {
-                Shoot(new Vector3(gameObject.transform.position.x + Random.Range(-50, 0), gameObject.transform.position.y, gameObject.transform.position.z + Random.Range(-50, -10)));
+                Vector3 calcTarget = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+                float angle = gameObject.transform.rotation.eulerAngles.y;
+
+                angle -= 90;
+                angle *= Mathf.Deg2Rad;
+
+                calcTarget.x = ProjectileRange * Mathf.Sin(angle) + gameObject.transform.position.x;
+                calcTarget.z = ProjectileRange * Mathf.Cos(angle) + gameObject.transform.position.z;
+
+                Shoot(calcTarget);
             }
         }
         public void Cleanup()
