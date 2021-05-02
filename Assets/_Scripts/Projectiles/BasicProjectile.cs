@@ -7,13 +7,8 @@ public class BasicProjectile : MonoBehaviour
     protected bool targetReached = false;
     protected bool Accelerate = false;
     protected float MoveSpeed = 2.5f;
-    private Vector3 target = Vector3.zero;
+    protected Vector3 target = Vector3.zero;
 
-    public void GenerateHealOrb(GameObject obj)
-    {
-        Accelerate = true;
-        SetTarget(obj.transform.position);
-    }
     public void SetTarget(Vector3 pos)
     {
         targetReached = false;
@@ -27,9 +22,9 @@ public class BasicProjectile : MonoBehaviour
     public void SetSpeed(float speedIn)
     {
         MoveSpeed = speedIn;
-    }
+    } 
 
-    void Update()
+    protected virtual void Update()
     {
         if (target != Vector3.zero)
         {

@@ -97,7 +97,7 @@ namespace AvatarRTS.Units.Support
             {
                 if (hasHealOrb && healOrb != null)
                 {
-                    if (healOrb.GetComponent<BasicProjectile>().HasReachedTarget() == true)
+                    if (healOrb.GetComponent<BasicTrackingProjectile>().HasReachedTarget() == true)
                     {
                         //Destroy our orb and heal the target
                         Destroy(healOrb);
@@ -112,7 +112,7 @@ namespace AvatarRTS.Units.Support
                 {
                     GameObject prefab = Resources.Load("Prefabs/HealerOrb", typeof(GameObject)) as GameObject;
                     healOrb = Instantiate(prefab, transform.position, Quaternion.identity);
-                    healOrb.GetComponent<BasicProjectile>().GenerateHealOrb(healUnit.gameObject);
+                    healOrb.GetComponent<BasicTrackingProjectile>().GenerateHealOrb(healUnit.gameObject);
                     hasHealOrb = true;
                 }
             }
