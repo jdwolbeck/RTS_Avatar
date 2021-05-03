@@ -23,7 +23,8 @@ namespace AvatarRTS.Buildings
         {
             //Place a predefined set of Buildings
             //CreateBuilding(TeamEnum.player, BuildingTypeEnum.Barracks, new Vector3(20, 0, -5), Quaternion.identity);
-            CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretSentry, new Vector3(16, 0, 3), Quaternion.identity);
+            CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretTwoPart, new Vector3(16, 0, 3), Quaternion.identity);
+            CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretSentry, new Vector3(18, 0, -1), Quaternion.identity);
             //CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretPack1, new Vector3(20, 0, 5), Quaternion.identity);
             //CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretPack2, new Vector3(16, 0, 3), Quaternion.identity);
             //CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretPack3, new Vector3(14, 0, 1), Quaternion.identity);
@@ -53,6 +54,7 @@ namespace AvatarRTS.Buildings
         Unknown,
         Barracks,
         TurretSentry,
+        TurretTwoPart,
         TurretPack1,
         TurretPack2,
         TurretPack3,

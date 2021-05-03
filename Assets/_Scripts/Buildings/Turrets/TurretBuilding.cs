@@ -14,10 +14,10 @@ namespace AvatarRTS.Buildings
         public float ProjectileRange { get; set; }
         public float RotationSpeed { get; set; }
 
-        private float atkCooldown;
-        private GameObject target;
-        private GameObject bulletPrefab;
-        private List<GameObject> projectiles;
+        protected float atkCooldown;
+        protected GameObject target;
+        protected GameObject bulletPrefab;
+        protected List<GameObject> projectiles;
 
         public ParticleSystem GunFireParticles;
 
@@ -61,18 +61,21 @@ namespace AvatarRTS.Buildings
                 }
             }
         }
-        public void DoRotate()
+        public virtual void DoRotate()
         {
             if (target != null)
             {
-                gameObject.transform.LookAt(target.transform);
+                Vector3 targetPostition = new Vector3(target.transform.position.x,
+                                       this.transform.position.y,
+                                       target.transform.position.z);
+                this.transform.LookAt(targetPostition);
             }
             else if(RotationSpeed > 0)
             {
                 gameObject.transform.Rotate(0f, RotationSpeed, 0f, Space.Self);
             }
         }
-        public void DoAttack()
+        public virtual void DoAttack()
         {
             if (atkCooldown > 0)
             {
@@ -104,7 +107,7 @@ namespace AvatarRTS.Buildings
             }
         }
 
-        private void Shoot(Vector3 target)
+        protected void Shoot(Vector3 target)
         {
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             BasicProjectile bp = bullet.GetComponent<BasicProjectile>();
