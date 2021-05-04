@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Reflection;
 
 public class BasicObject : MonoBehaviour
 {
@@ -102,6 +103,36 @@ public class BasicObject : MonoBehaviour
         }
 
         return closestCollider;
+    }
+
+    public string GetDebugString()
+    {
+        string debugMessage = String.Empty;
+
+        PropertyInfo[] properties = GetType().GetProperties();
+        foreach (PropertyInfo property in properties)
+        {
+            var type = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+            if (type == typeof(string) || type == typeof(float) || type == typeof(double) || type == typeof(int) || type == typeof(bool))
+            {
+                object v = property.GetValue(this, null);
+                string vStr = String.Empty;
+
+                if (v == null)
+                    vStr = "[Null]";
+                else
+                    vStr = v.ToString();
+
+                debugMessage += property.Name + ": " + vStr + Environment.NewLine;
+            }
+        }
+
+        if (!String.IsNullOrEmpty(debugMessage))
+        {
+            debugMessage = "======= PropDebug [Click To see] =======" + Environment.NewLine + "Object Type: " + GetType() + Environment.NewLine + debugMessage;
+        }
+
+        return debugMessage;
     }
 
     protected virtual void Die()

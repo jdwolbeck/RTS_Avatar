@@ -47,30 +47,11 @@ namespace AvatarRTS.Interactables
 
                 if (baseObj != null)
                 {
-                    string debugMessage = String.Empty;
+                    string debugMsg = baseObj.GetDebugString();
 
-                    PropertyInfo[] properties = baseObj.GetType().GetProperties();
-                    foreach (PropertyInfo property in properties)
+                    if (!String.IsNullOrEmpty(debugMsg))
                     {
-                        var type = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
-                        if (type == typeof(string) || type == typeof(float) || type == typeof(double) || type == typeof(int) || type == typeof(bool))
-                        {
-                            object v = property.GetValue(baseObj, null);
-                            string vStr = String.Empty;
-
-                            if (v == null)
-                                vStr = "[Null]";
-                            else
-                                vStr = v.ToString();
-
-                            debugMessage += property.Name + ": " + vStr + Environment.NewLine;
-                        }
-                    }
-
-                    if (!String.IsNullOrEmpty(debugMessage))
-                    {
-                        debugMessage = "======= PropDebug [Click To see] =======" + Environment.NewLine + "Object Type: " + baseObj.GetType() + Environment.NewLine + debugMessage;
-                        DebugHandler.Print(debugMessage);
+                        DebugHandler.Print(debugMsg);
                     }
                 }
             }

@@ -12,7 +12,7 @@ namespace AvatarRTS.Buildings
         public float AtkSpeed { get; set; }
         public float ProjectileSpeed { get; set; }
         public float ProjectileRange { get; set; }
-        public float RotationSpeed { get; set; }
+        protected float RotationSpeed { get; set; }
 
         protected float atkCooldown;
         protected GameObject target;
@@ -29,7 +29,7 @@ namespace AvatarRTS.Buildings
             Armor = 5;
 
             AttackDamage = 15;
-            AtkSpeed = 2f;
+            AtkSpeed = 5f;
             ProjectileSpeed = 20f;
             ProjectileRange = 10f;
             RotationSpeed = 0.075f;
@@ -43,6 +43,7 @@ namespace AvatarRTS.Buildings
 
         protected override void Update()
         {
+            base.Update();
             FindTarget();
             DoRotate();
             DoAttack();
