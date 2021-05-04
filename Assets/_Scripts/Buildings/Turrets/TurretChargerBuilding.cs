@@ -14,7 +14,6 @@ namespace AvatarRTS.Buildings
         protected float ChargeIncrement { get; set; }
         protected int ChargeFillCount { get; set; }
         
-
         public override void Awake()
         {
             base.Awake();

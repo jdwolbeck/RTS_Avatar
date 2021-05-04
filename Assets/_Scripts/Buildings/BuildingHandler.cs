@@ -23,15 +23,11 @@ namespace AvatarRTS.Buildings
         {
             //Place a predefined set of Buildings
             //CreateBuilding(TeamEnum.player, BuildingTypeEnum.Barracks, new Vector3(20, 0, -5), Quaternion.identity);
-            CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretTwoPart, new Vector3(16, 0, 3), Quaternion.identity);
-            CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretSentry, new Vector3(18, 0, -1), Quaternion.identity);
-            CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretCharge, new Vector3(14, 0, 6), Quaternion.identity);
-            //CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretPack1, new Vector3(20, 0, 5), Quaternion.identity);
-            //CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretPack2, new Vector3(16, 0, 3), Quaternion.identity);
-            //CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretPack3, new Vector3(14, 0, 1), Quaternion.identity);
-            //CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretPack4, new Vector3(12, 0, 5), Quaternion.identity);
-            //CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretPack5, new Vector3(14, 0, 3), Quaternion.identity);
-            //CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretPack6, new Vector3(20, 0, 1), Quaternion.identity);
+            CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretBasic, new Vector3(16, 0, 3), Quaternion.identity);
+            CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretSentry, new Vector3(20, 0, 1), Quaternion.identity);
+            CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretMammoth, new Vector3(16, 0, 12), Quaternion.identity);
+
+            CreateBuilding(TeamEnum.enemy, BuildingTypeEnum.TurretMammoth, new Vector3(6, 0, 12), Quaternion.identity);
         }
         private void CreateBuilding(TeamEnum team, BuildingTypeEnum type, Vector3 position, Quaternion rotation)
         {
@@ -47,6 +43,7 @@ namespace AvatarRTS.Buildings
             unitFolder = GameObject.FindWithTag(StringCapitolizeFirstLetter(team.ToString()) + "Buildings").transform;
             unitObject.transform.SetParent(unitFolder);
             unitObject.name = prefab.name;
+            unitObject.GetComponent<BasicObject>().Team = team;
             unitObject.GetComponent<BasicObject>().InitializeObject();
         }
     }
@@ -54,14 +51,8 @@ namespace AvatarRTS.Buildings
     {
         Unknown,
         Barracks,
+        TurretBasic,
         TurretSentry,
-        TurretTwoPart,
-        TurretCharge,
-        TurretPack1,
-        TurretPack2,
-        TurretPack3,
-        TurretPack4,
-        TurretPack5,
-        TurretPack6
+        TurretMammoth
     }
 }
