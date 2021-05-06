@@ -5,24 +5,18 @@ using UnityEngine;
 public class BasicProjectile : MonoBehaviour
 {
     protected bool targetReached = false;
-    protected bool Accelerate = false;
     protected float MoveSpeed = 2.5f;
     protected Vector3 target = Vector3.zero;
+    protected TeamEnum Team;
+    protected GameObject parentObject;
 
-    public void SetTarget(Vector3 pos)
+    public void InitializeProjectile(Vector3 projTarget, float projSpeed, GameObject projParent, TeamEnum projTeam)
     {
-        targetReached = false;
-        target = pos;
+        target = projTarget;
+        MoveSpeed = projSpeed;
+        parentObject = projParent;
+        Team = projTeam;
     }
-    public void SetTargetAndSpeed(Vector3 pos, float speedIn)
-    {
-        SetTarget(pos);
-        SetSpeed(speedIn);
-    }
-    public void SetSpeed(float speedIn)
-    {
-        MoveSpeed = speedIn;
-    } 
 
     protected virtual void Update()
     {
@@ -32,21 +26,46 @@ public class BasicProjectile : MonoBehaviour
             targetDir.Normalize(); //Must normalize this output since the direction should not be scaled with distance but rather MoveSpeed should be used to scale
             transform.position += (targetDir * (MoveSpeed * Time.deltaTime));
 
-            if (Accelerate)
-            {
-                MoveSpeed += 0.01f;
-            }
-
-            //Our projectile has gotten to the target, lets set the boolean
-            if (Vector3.Distance(target, this.transform.position) <= 1)
+            //We've reached our target position, set the boolean
+            if (Vector3.Distance(target, this.transform.position) <= 0.2f)
             {
                 targetReached = true;
             }
         }
     }
 
+    public void SetNewTarget(Vector3 pos)
+    {
+        targetReached = false;
+        target = pos;
+    }
+
     public bool HasReachedTarget()
     {
         return targetReached;
+    }
+
+    protected virtual void OnTriggerEnter(Collider collision)
+    {
+        if (collision != null && parentObject != null)
+        {
+            BasicObject basicObject = collision.gameObject.GetComponent<BasicObject>();
+            if (collision.gameObject != parentObject && basicObject != null && IsTargetedTeam(basicObject.Team))
+            {
+                //Our projectile has gotten to a GameObject on the targeted team, lets set the boolean
+                DoAction(collision);
+            }
+        }
+    }
+
+    protected virtual void DoAction(Collider collision)
+    {
+        targetReached = false;
+        Destroy(gameObject);
+    }
+
+    protected virtual bool IsTargetedTeam(TeamEnum team)
+    {
+        return false;
     }
 }

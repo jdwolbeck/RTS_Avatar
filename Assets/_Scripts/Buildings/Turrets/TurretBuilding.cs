@@ -184,7 +184,7 @@ namespace AvatarRTS.Buildings
 
             GameObject bullet = Instantiate(bulletPrefab, bulletStartPos, Quaternion.identity);
             BasicProjectile bp = bullet.GetComponent<BasicProjectile>();
-            bp.SetTargetAndSpeed(target, ProjectileSpeed);
+            bp.InitializeProjectile(target, ProjectileSpeed, gameObject, Team);
 
             projectiles.Add(bullet);
 
