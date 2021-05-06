@@ -6,61 +6,97 @@ using UnityEngine.AI;
 
 namespace AvatarRTS.Buildings
 {
-    //[CreateAssetMenu(fileName = "Building", menuName = "New Building/Turret")]
     public class TurretBuilding : BasicBuilding
     {
         public float AttackDamage { get; set; }
         public float AtkSpeed { get; set; }
         public float ProjectileSpeed { get; set; }
         public float ProjectileRange { get; set; }
-        public float RotationSpeed { get; set; }
+        protected float RotationSpeed { get; set; }
 
-        private float atkCooldown;
-        private GameObject bulletPrefab;
-        private List<GameObject> projectiles;
+        protected float atkCooldown { get; set; }
+        protected int cannonIterator { get; set; }
+        protected GameObject target;
+        protected GameObject bulletPrefab;
+        protected List<GameObject> cannons;
+        protected List<GameObject> projectiles;
 
         public override void Awake()
         {
             base.Awake();
             Cost = 250;
-            MaxHealth = 500;
-            Armor = 1;
+            MaxHealth = 2000;
+            Armor = 5;
 
             AttackDamage = 15;
-            AtkSpeed = 0.3f;
+            AtkSpeed = 2f;
             ProjectileSpeed = 20f;
             ProjectileRange = 10f;
             RotationSpeed = 0.075f;
 
             bulletPrefab = Resources.Load("Prefabs/Bullet", typeof(GameObject)) as GameObject;
+            cannons = new List<GameObject>();
             projectiles = new List<GameObject>();
+
+            //Search the object children for the Cannon Component
+            SearchForObjectCannons();
+            cannonIterator = 0;
         }
 
-        public void Update()
+        protected override void Update()
         {
+            base.Update();
+            FindTarget();
             DoRotate();
             DoAttack();
             Cleanup();
         }
 
-        public void DoRotate()
+        public void FindTarget()
         {
-            if(RotationSpeed > 0)
-                gameObject.transform.Rotate(0f, RotationSpeed, 0f, Space.Self);
+            if (target != null)
+            {
+                float d = Vector3.Distance(target.transform.position, transform.position);
+                if (d > ProjectileRange)
+                    target = null;
+            }
+
+            if (target == null)
+            {
+                Collider c = CheckForEnemyTargets(ProjectileRange, true);
+
+                if (c != null)
+                {
+                    target = c.gameObject;
+                }
+            }
         }
-        public void DoAttack()
+        public virtual void DoRotate()
+        {
+            if (target != null)
+            {
+                Vector3 targetPostition = new Vector3(target.transform.position.x,
+                                       this.transform.position.y,
+                                       target.transform.position.z);
+                this.transform.LookAt(targetPostition);
+            }
+            else if(RotationSpeed > 0)
+            {
+                gameObject.transform.Rotate(0f, RotationSpeed, 0f, Space.Self);
+            }
+        }
+        public virtual void DoAttack()
         {
             if (atkCooldown > 0)
             {
                 atkCooldown -= Time.deltaTime;
             }
 
-            if (atkCooldown <= 0)
+            if (atkCooldown <= 0 && target != null)
             {
                 Vector3 calcTarget = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
                 float angle = gameObject.transform.rotation.eulerAngles.y;
 
-                //angle -= 90;
                 angle *= Mathf.Deg2Rad;
 
                 calcTarget.x = ProjectileRange * Mathf.Sin(angle) + gameObject.transform.position.x;
@@ -81,9 +117,72 @@ namespace AvatarRTS.Buildings
             }
         }
 
-        private void Shoot(Vector3 target)
+        protected void SearchForObjectCannons()
         {
-            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            foreach (Transform child in transform)
+            {
+                if (child != null)
+                {
+                    if (child.GetComponent<CannonComponenet>() != null)
+                    {
+                        cannons.Add(child.gameObject);
+                    }
+                    else
+                    {
+                        foreach (Transform innerChild in child)
+                        {
+                            if (innerChild != null && innerChild.GetComponent<CannonComponenet>() != null)
+                            {
+                                cannons.Add(innerChild.gameObject);
+                            }
+                        }
+                    }
+                }
+            }
+
+            //Attack speed buff for additional cannons
+            if (cannons.Count > 1)
+                AtkSpeed = AtkSpeed / cannons.Count;
+
+            //Debug.Log($"Total Cannons: = {cannons.Count}");
+        }
+        protected void StopAllCannonFireAnimations()
+        {
+            for (int i = 0; i < cannons.Count; i++)
+            {
+                CannonComponenet c = cannons[i].GetComponent<CannonComponenet>();
+
+                if (c != null && c.GunFireParticles != null)
+                    c.GunFireParticles.Stop();
+            }
+        }
+        protected void Shoot(Vector3 target)
+        {
+            Vector3 bulletStartPos = transform.position;
+
+            //Logic for alternating fire between multiple cannons if the object has multiple.
+            if (cannons.Count > 0)
+            {
+                CannonComponenet c = cannons[cannonIterator].GetComponent<CannonComponenet>();
+                bulletStartPos = cannons[cannonIterator].transform.position;
+
+                //If the cannon object has a particle effect then activate it
+                if (c.GunFireParticles != null)
+                {
+                    c.GunFireParticles.Stop();
+
+                    var playDir = c.GunFireParticles.main;
+                    playDir.duration = 0.2f;
+
+                    c.GunFireParticles.Play();
+                }
+
+                cannonIterator++;
+                if (cannonIterator >= cannons.Count)
+                    cannonIterator = 0;
+            }
+
+            GameObject bullet = Instantiate(bulletPrefab, bulletStartPos, Quaternion.identity);
             BasicProjectile bp = bullet.GetComponent<BasicProjectile>();
             bp.SetTargetAndSpeed(target, ProjectileSpeed);
 

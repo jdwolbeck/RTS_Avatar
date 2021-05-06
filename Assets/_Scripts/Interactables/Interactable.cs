@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 namespace AvatarRTS.Interactables
@@ -29,11 +31,30 @@ namespace AvatarRTS.Interactables
         public virtual void ShowHighlight()
         {
             highlight.SetActive(true);
+            DebugLogUnitInfo();
         }
 
         public virtual void HideHighlight()
         {
             highlight.SetActive(false);
+        }
+
+        private void DebugLogUnitInfo()
+        {
+            if (DebugHandler.enableClickPropInfo)
+            {
+                BasicObject baseObj = gameObject.GetComponent<BasicObject>();
+
+                if (baseObj != null)
+                {
+                    string debugMsg = baseObj.GetDebugString();
+
+                    if (!String.IsNullOrEmpty(debugMsg))
+                    {
+                        DebugHandler.Print(debugMsg);
+                    }
+                }
+            }
         }
     }
 }

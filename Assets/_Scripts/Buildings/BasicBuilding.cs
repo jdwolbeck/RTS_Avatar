@@ -11,7 +11,7 @@ namespace AvatarRTS.Buildings
         public string Name { get; set; }
         public GameObject BuildingPrefab;
 
-        public BasicBuilding()
+        public override void Awake()
         {
             Cost = 500;
             MaxHealth = 2500;

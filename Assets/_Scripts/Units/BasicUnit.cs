@@ -30,10 +30,10 @@ namespace AvatarRTS.Units
             AggroRange = 10;
         }
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             NavAgent = GetComponent<NavMeshAgent>();
-            CurrentHealth = MaxHealth;
         }
 
         public override void InitializeObject()

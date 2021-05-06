@@ -24,7 +24,7 @@ namespace AvatarRTS.Units.Support
             AttackRange = 5;
         }
 
-        private void Update()
+        protected override void Update()
         {
             if (HealCooldown > 0)
             {
