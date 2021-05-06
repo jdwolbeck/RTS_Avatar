@@ -82,7 +82,7 @@ namespace AvatarRTS.Units.Support
 
         public void HandleUnitHeal(Transform target)
         {
-            if (target != null)
+            if (target != null && target.gameObject != gameObject)
             {
                 DebugHandler.Print($"{gameObject.ToString()} | {Team.ToString()}: Healer target aquired ({target.ToString()})");
                 healTarget = target;
@@ -113,6 +113,7 @@ namespace AvatarRTS.Units.Support
                     GameObject prefab = Resources.Load("Prefabs/HealerOrb", typeof(GameObject)) as GameObject;
                     healOrb = Instantiate(prefab, transform.position, Quaternion.identity);
                     healOrb.GetComponent<BasicTrackingProjectile>().GenerateHealOrb(healUnit.gameObject);
+                    healOrb.GetComponent<BasicTrackingProjectile>().SetSpeed(8f);
                     hasHealOrb = true;
                 }
             }
