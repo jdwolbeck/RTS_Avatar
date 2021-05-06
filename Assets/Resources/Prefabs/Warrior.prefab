@@ -742,10 +742,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Team: 0
-  Cost: 250
-  MaxHealth: 0
-  CurrentHealth: 0
-  Armor: 3
   HealthBar: {fileID: 0}
   UnitType: 1
   Name: 

@@ -10,7 +10,6 @@ namespace AvatarRTS.Units.Support
         private Transform healTarget;
         private BasicObject healUnit;
         private float distance;
-        private bool hasHealOrb = false;
         private GameObject healOrb;
 
 
@@ -92,31 +91,28 @@ namespace AvatarRTS.Units.Support
 
         private void HealTarget()
         {
-            if ((HealCooldown <= 0) && (distance <= AttackRange + 1)
+            if ((distance <= AttackRange + 1)
                 && (healUnit.CurrentHealth + HealAmount <= healUnit.MaxHealth))
             {
-                if (hasHealOrb && healOrb != null)
+                if (HealCooldown <= 0)
                 {
-                    if (healOrb.GetComponent<BasicTrackingProjectile>().HasReachedTarget() == true)
-                    {
-                        //Destroy our orb and heal the target
-                        Destroy(healOrb);
-                        hasHealOrb = false;
-
-                        Debug.Log($"Healer healUnit (c, a, m : {healUnit.CurrentHealth}, {HealAmount}, {healUnit.MaxHealth})");
-                        healUnit.Heal(HealAmount);
-                        HealCooldown = AttackSpeed;
-                    }
-                }
-                else
-                {
+                    //Instantiate a HealerOrb prefab under our Healer, set its target to the object we want to heal
                     GameObject prefab = Resources.Load("Prefabs/HealerOrb", typeof(GameObject)) as GameObject;
                     healOrb = Instantiate(prefab, transform.position, Quaternion.identity);
-                    healOrb.GetComponent<BasicTrackingProjectile>().GenerateHealOrb(healUnit.gameObject);
-                    healOrb.GetComponent<BasicTrackingProjectile>().SetSpeed(8f);
-                    hasHealOrb = true;
+                    HealingProjectile btProj = healOrb.GetComponent<HealingProjectile>();
+                    btProj.InitializeProjectile(healUnit.gameObject.transform.position, 8f, gameObject, Team);
+                    btProj.SetTargetObject(healUnit.gameObject);
+                    btProj.SetHealAmount(HealAmount);
+
+                    //Reset our cooldown to our attackspeed to allow for another heal
+                    HealCooldown = AttackSpeed;
                 }
             }
+        }
+
+        public void ProjectileIsFinished()
+        {
+           
         }
     }
 }

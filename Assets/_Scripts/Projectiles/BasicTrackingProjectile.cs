@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class BasicTrackingProjectile : BasicProjectile
 {
-    private GameObject targetObj;
+    protected GameObject targetObj;
 
-    public void GenerateHealOrb(GameObject obj)
+    public void SetTargetObject(GameObject obj)
     {
-        //Accelerate = true;
         targetObj = obj;
-        SetTarget(targetObj.transform.position);
+        SetNewTarget(targetObj.transform.position);
     }
 
     protected override void Update()
