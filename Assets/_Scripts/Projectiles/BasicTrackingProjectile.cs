@@ -8,7 +8,7 @@ public class BasicTrackingProjectile : BasicProjectile
 
     public void GenerateHealOrb(GameObject obj)
     {
-        Accelerate = true;
+        //Accelerate = true;
         targetObj = obj;
         SetTarget(targetObj.transform.position);
     }
@@ -19,6 +19,10 @@ public class BasicTrackingProjectile : BasicProjectile
         {
             target = targetObj.transform.position;
             base.Update();
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 }
