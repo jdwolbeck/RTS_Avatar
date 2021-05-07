@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 7672050423757628861}
   - component: {fileID: 3755334531250354930}
   - component: {fileID: 5076150547159466673}
-  - component: {fileID: 8250828879739921908}
+  - component: {fileID: 1735346641820782829}
   m_Layer: 8
   m_Name: TurretMammoth
   m_TagString: Untagged
@@ -147,12 +147,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Team: 0
   HealthBar: {fileID: 0}
+  TeamColorMat: {fileID: 0}
   BuildingPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 2178946565881672889, guid: 3e742f90e77096e49a90a12944f3d70c, type: 3}
   TurretHead: {fileID: 2603443021874122172}
   ChargeObjects: {fileID: 2601657516998275182}
   EmptyCharge: {fileID: 2100000, guid: be02ccbe306a52346ac6fd17268c2d39, type: 2}
   FullCharge: {fileID: 2100000, guid: 19bb08ecea885b94d90f2a18e59fa9c8, type: 2}
---- !u!65 &8250828879739921908
+--- !u!65 &1735346641820782829
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,8 +165,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.86757755, y: 0.9860033, z: 1}
+  m_Center: {x: -0.016722858, y: 0.61176413, z: 0}
 --- !u!1 &1077031664628606641
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,6 +179,7 @@ GameObject:
   - component: {fileID: 4061464191051935037}
   - component: {fileID: 1679982872404282815}
   - component: {fileID: 5992093912073603511}
+  - component: {fileID: 2831951280021531359}
   m_Layer: 2
   m_Name: LeftPanel
   m_TagString: Untagged
@@ -260,6 +263,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2831951280021531359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077031664628606641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b79a2c490d3c3f14d9f80a2d8a276c44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DisplayTeamColor: 1
 --- !u!1 &1821106636371950194
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,6 +849,7 @@ GameObject:
   - component: {fileID: 6946086508839342775}
   - component: {fileID: 5032399829404718205}
   - component: {fileID: 3237575783589680133}
+  - component: {fileID: 2119845668235668386}
   m_Layer: 2
   m_Name: RightPanel
   m_TagString: Untagged
@@ -916,6 +933,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2119845668235668386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4152378506133874062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b79a2c490d3c3f14d9f80a2d8a276c44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DisplayTeamColor: 1
 --- !u!1 &4226397309960457921
 GameObject:
   m_ObjectHideFlags: 0
@@ -1748,6 +1778,7 @@ GameObject:
   - component: {fileID: 3101830893286996153}
   - component: {fileID: 2623077418644724043}
   - component: {fileID: 5189098877112871334}
+  - component: {fileID: 4542529229316048533}
   m_Layer: 2
   m_Name: CenterPanel
   m_TagString: Untagged
@@ -1796,7 +1827,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cd9f8ef18a750224fb2effb5968c1ec8, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1831,6 +1862,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4542529229316048533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8536317673572853931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b79a2c490d3c3f14d9f80a2d8a276c44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DisplayTeamColor: 1
 --- !u!1 &8593832779345716869
 GameObject:
   m_ObjectHideFlags: 0
@@ -2465,7 +2509,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1416871780054332919, guid: 916eba5a4ff55844490df32985a4b51f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.034
+      value: -1.81
       objectReference: {fileID: 0}
     - target: {fileID: 1416871780054332919, guid: 916eba5a4ff55844490df32985a4b51f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2489,7 +2533,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1416871780054332919, guid: 916eba5a4ff55844490df32985a4b51f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.826
+      value: 0.598
       objectReference: {fileID: 0}
     - target: {fileID: 1416871780054332919, guid: 916eba5a4ff55844490df32985a4b51f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

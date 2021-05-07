@@ -49,7 +49,7 @@ namespace AvatarRTS.Units
             CreateUnit(TeamEnum.enemy, UnitTypeEnum.Warrior, new Vector3(-8, 0, 0), Quaternion.identity);
         }
 
-        public void CreateUnit(TeamEnum team, UnitTypeEnum type, Vector3 position, Quaternion rotation)
+        public GameObject CreateUnit(TeamEnum team, UnitTypeEnum type, Vector3 position, Quaternion rotation)
         {
             try
             {
@@ -79,11 +79,14 @@ namespace AvatarRTS.Units
                 }
 
                 unitList.Add(unitObject);
+                return unitObject;
             }
             catch (Exception e)
             {
                 Debug.Log(e.Message + Environment.NewLine + e.StackTrace);
             }
+
+            return null;
         }
     }
 }

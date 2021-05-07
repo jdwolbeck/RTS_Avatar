@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 5047604176408969122}
   - component: {fileID: 7447524550640431269}
   - component: {fileID: 7190374213499775988}
+  - component: {fileID: 9155853570186923955}
   m_Layer: 2
   m_Name: Head
   m_TagString: Untagged
@@ -181,6 +182,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &9155853570186923955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757283146021174225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b79a2c490d3c3f14d9f80a2d8a276c44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DisplayTeamColor: 1
 --- !u!1 &784984688575610511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1480,9 +1494,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4569614819970620220}
-  - component: {fileID: 7248456997973375373}
   - component: {fileID: -832678549342214907}
   - component: {fileID: 1452155266647466489}
+  - component: {fileID: 8899383340739940973}
   m_Layer: 8
   m_Name: TurretSentry
   m_TagString: Untagged
@@ -1508,19 +1522,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7248456997973375373
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8194902508365187143}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-832678549342214907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1549,11 +1550,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Team: 0
   HealthBar: {fileID: 0}
+  TeamColorMat: {fileID: 0}
   BuildingPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 1424060557193939538, guid: 266373140a2facb4c9c993be8d15d21d, type: 3}
   TurretHead: {fileID: 757283146021174225}
   ChargeObjects: {fileID: 1848338352138893568}
   EmptyCharge: {fileID: 2100000, guid: be02ccbe306a52346ac6fd17268c2d39, type: 2}
   FullCharge: {fileID: 2100000, guid: 19bb08ecea885b94d90f2a18e59fa9c8, type: 2}
+--- !u!65 &8899383340739940973
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8194902508365187143}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.2694985, z: 1}
+  m_Center: {x: 0, y: 0.6673674, z: 0}
 --- !u!1 &8278720859373725270
 GameObject:
   m_ObjectHideFlags: 0
@@ -1939,7 +1955,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1416871780054332919, guid: 916eba5a4ff55844490df32985a4b51f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.034
+      value: -1.23
       objectReference: {fileID: 0}
     - target: {fileID: 1416871780054332919, guid: 916eba5a4ff55844490df32985a4b51f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1963,7 +1979,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1416871780054332919, guid: 916eba5a4ff55844490df32985a4b51f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.826
+      value: 0.58
       objectReference: {fileID: 0}
     - target: {fileID: 1416871780054332919, guid: 916eba5a4ff55844490df32985a4b51f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

@@ -14,12 +14,11 @@ namespace AvatarRTS.Buildings
         public float ProjectileRange { get; set; }
         protected float RotationSpeed { get; set; }
 
+        public GameObject bulletPrefab;
         protected float atkCooldown { get; set; }
         protected int cannonIterator { get; set; }
         protected GameObject target;
-        protected GameObject bulletPrefab;
         protected List<GameObject> cannons;
-        protected List<GameObject> projectiles;
 
         public override void Awake()
         {
@@ -28,15 +27,16 @@ namespace AvatarRTS.Buildings
             MaxHealth = 2000;
             Armor = 5;
 
-            AttackDamage = 15;
+            AttackDamage = 30f;
             AtkSpeed = 2f;
             ProjectileSpeed = 20f;
             ProjectileRange = 10f;
             RotationSpeed = 0.075f;
 
-            bulletPrefab = Resources.Load("Prefabs/Bullet", typeof(GameObject)) as GameObject;
+            //if(bulletPrefab == null)
+            //    bulletPrefab = Resources.Load("Prefabs/ProjectileMissile", typeof(GameObject)) as GameObject;
+
             cannons = new List<GameObject>();
-            projectiles = new List<GameObject>();
 
             //Search the object children for the Cannon Component
             SearchForObjectCannons();
@@ -49,7 +49,6 @@ namespace AvatarRTS.Buildings
             FindTarget();
             DoRotate();
             DoAttack();
-            Cleanup();
         }
 
         public void FindTarget()
@@ -94,7 +93,7 @@ namespace AvatarRTS.Buildings
 
             if (atkCooldown <= 0 && target != null)
             {
-                Vector3 calcTarget = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+                Vector3 calcTarget = new Vector3(gameObject.transform.position.x, target.transform.GetComponent<Collider>().bounds.center.y, gameObject.transform.position.z);
                 float angle = gameObject.transform.rotation.eulerAngles.y;
 
                 angle *= Mathf.Deg2Rad;
@@ -103,17 +102,6 @@ namespace AvatarRTS.Buildings
                 calcTarget.z = ProjectileRange * Mathf.Cos(angle) + gameObject.transform.position.z;
 
                 Shoot(calcTarget);
-            }
-        }
-        public void Cleanup()
-        {
-            for (int i = projectiles.Count - 1; i >= 0; i--)
-            {
-                if (projectiles[i].GetComponent<BasicProjectile>().HasReachedTarget())
-                {
-                    Destroy(projectiles[i]);
-                    projectiles.RemoveAt(i);
-                }
             }
         }
 
@@ -156,7 +144,7 @@ namespace AvatarRTS.Buildings
                     c.GunFireParticles.Stop();
             }
         }
-        protected void Shoot(Vector3 target)
+        protected void Shoot(Vector3 targetVec)
         {
             Vector3 bulletStartPos = transform.position;
 
@@ -183,10 +171,10 @@ namespace AvatarRTS.Buildings
             }
 
             GameObject bullet = Instantiate(bulletPrefab, bulletStartPos, Quaternion.identity);
-            BasicProjectile bp = bullet.GetComponent<BasicProjectile>();
-            bp.InitializeProjectile(target, ProjectileSpeed, gameObject, Team);
-
-            projectiles.Add(bullet);
+            DamageProjectile bp = bullet.GetComponent<DamageProjectile>();
+            bp.InitializeProjectile(targetVec, ProjectileSpeed, gameObject, Team);
+            bp.SetDamage(AttackDamage);
+            bp.transform.LookAt(targetVec);
 
             atkCooldown = AtkSpeed;
         }
