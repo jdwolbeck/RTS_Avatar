@@ -14,6 +14,8 @@ public class BasicObject : MonoBehaviour
     public float CurrentHealth { get; set; }
     public float Armor { get; set; }
     public UnitStatDisplay HealthBar;
+    public Material TeamColorMat;
+    private List<GameObject> TeamDisplayObjs = new List<GameObject>();
 
     public virtual void Awake()
     {
@@ -41,6 +43,15 @@ public class BasicObject : MonoBehaviour
         HealthBar.maxHealth = MaxHealth;
         HealthBar.currentHealth = MaxHealth;
         HealthBar.armor = Armor;
+
+        SearchForTeamDisplayComponents(transform);
+
+        foreach (GameObject hc in TeamDisplayObjs)
+        {
+            hc.GetComponent<Renderer>().material = TeamColorMat;
+        }
+
+        TeamDisplayObjs = null;
     }
 
     public virtual void HandlePlayerAction(RaycastHit hit)
@@ -81,6 +92,7 @@ public class BasicObject : MonoBehaviour
             {
                 if ((rangeColliders[i].gameObject.layer == UnitHandler.instance.InteractablesLayer ||
                     rangeColliders[i].gameObject.layer == UnitHandler.instance.EnemyUnitsLayer) &&
+                    rangeColliders[i].gameObject.GetComponent<BasicObject>() != null &&
                     rangeColliders[i].gameObject.GetComponent<BasicObject>().Team != Team)
                 {
                     //If you just want any target then return the first target that meets the criteria
@@ -104,7 +116,21 @@ public class BasicObject : MonoBehaviour
 
         return closestCollider;
     }
+    private void SearchForTeamDisplayComponents(Transform t)
+    {
+        foreach (Transform child in t)
+        {
+            if (child != null)
+            {
+                if (child.GetComponent<TeamDisplayComponent>() != null)
+                {
+                    TeamDisplayObjs.Add(child.gameObject);
+                }
 
+                SearchForTeamDisplayComponents(child);
+            }
+        }
+    }
     public string GetDebugString()
     {
         string debugMessage = String.Empty;

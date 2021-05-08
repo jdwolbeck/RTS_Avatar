@@ -13,6 +13,7 @@ namespace AvatarRTS.Buildings
         protected int ChargeCount { get; set; }
         protected float ChargeIncrement { get; set; }
         protected int ChargeFillCount { get; set; }
+        private int lastFillCount = -1;
         
         public override void Awake()
         {
@@ -41,12 +42,17 @@ namespace AvatarRTS.Buildings
         {
             ChargeFillCount = (int)Mathf.Floor(atkCooldown / ChargeIncrement);
 
-            for (int i = 0; i < ChargeCount; i++)
+            if (ChargeFillCount != lastFillCount)
             {
-                if (i < ChargeFillCount)
-                    ChargeTransforms[i].gameObject.GetComponent<SpriteRenderer>().material = EmptyCharge;
-                else
-                    ChargeTransforms[i].gameObject.GetComponent<SpriteRenderer>().material = FullCharge;
+                for (int i = 0; i < ChargeCount; i++)
+                {
+                    if (i < ChargeFillCount)
+                        ChargeTransforms[i].gameObject.GetComponent<SpriteRenderer>().material = EmptyCharge;
+                    else
+                        ChargeTransforms[i].gameObject.GetComponent<SpriteRenderer>().material = FullCharge;
+                }
+
+                lastFillCount = ChargeFillCount;
             }
         }
     }

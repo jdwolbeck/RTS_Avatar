@@ -10,16 +10,19 @@ namespace AvatarRTS.Buildings
 
         public override void DoRotate()
         {
-            if (target != null)
+            if (TurretHead != null)
             {
-                Vector3 targetPostition = new Vector3(target.transform.position.x,
-                                       TurretHead.transform.position.y,
-                                       target.transform.position.z);
-                TurretHead.transform.LookAt(targetPostition);
-            }
-            else if (RotationSpeed > 0)
-            {
-                TurretHead.transform.Rotate(0f, RotationSpeed, 0f, Space.Self);
+                if (target != null)
+                {
+                    Vector3 targetPostition = new Vector3(target.transform.position.x,
+                                           TurretHead.transform.position.y,
+                                           target.transform.position.z);
+                    TurretHead.transform.LookAt(targetPostition);
+                }
+                else if (RotationSpeed > 0)
+                {
+                    TurretHead.transform.Rotate(0f, RotationSpeed, 0f, Space.Self);
+                }
             }
         }
         public override void DoAttack()
@@ -31,7 +34,7 @@ namespace AvatarRTS.Buildings
 
             if (atkCooldown <= 0 && target != null)
             {
-                Shoot(target.transform.position);
+                Shoot(new Vector3(target.transform.position.x, target.transform.GetComponent<Collider>().bounds.center.y, target.transform.position.z));
             }
         }
     }

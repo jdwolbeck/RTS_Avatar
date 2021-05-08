@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class BasicProjectile : MonoBehaviour
     protected Vector3 target = Vector3.zero;
     protected TeamEnum Team;
     protected GameObject parentObject;
+    private DateTime reachedTargetTime;
 
     public void InitializeProjectile(Vector3 projTarget, float projSpeed, GameObject projParent, TeamEnum projTeam)
     {
@@ -20,17 +22,25 @@ public class BasicProjectile : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (target != Vector3.zero)
+        if (!targetReached)
         {
-            Vector3 targetDir = target - this.transform.position;
-            targetDir.Normalize(); //Must normalize this output since the direction should not be scaled with distance but rather MoveSpeed should be used to scale
-            transform.position += (targetDir * (MoveSpeed * Time.deltaTime));
-
-            //We've reached our target position, set the boolean
-            if (Vector3.Distance(target, this.transform.position) <= 0.2f)
+            if (target != Vector3.zero)
             {
-                targetReached = true;
+                Vector3 targetDir = target - this.transform.position;
+                targetDir.Normalize(); //Must normalize this output since the direction should not be scaled with distance but rather MoveSpeed should be used to scale
+                transform.position += (targetDir * (MoveSpeed * Time.deltaTime));
+
+                //We've reached our target position, set the boolean
+                if (Vector3.Distance(target, this.transform.position) <= 0.2f)
+                {
+                    targetReached = true;
+                    reachedTargetTime = DateTime.Now;
+                }
             }
+        }
+        else if((DateTime.Now - reachedTargetTime).TotalSeconds>= 2)
+        {
+            Destroy(gameObject);
         }
     }
 

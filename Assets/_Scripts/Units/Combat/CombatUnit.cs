@@ -55,35 +55,50 @@ namespace AvatarRTS.Units
                 MoveUnit(hit.point);
             }
         }
-   
+
         private void CheckForEnemyTargets()
         {
-            Collider[] rangeColliders = Physics.OverlapSphere(transform.position, AggroRange);
-            for (int i = 0; i < rangeColliders.Length; i++)
+            Collider c = CheckForEnemyTargets(AggroRange, true);
+
+            if (c != null)
             {
-                try
-                {
-                    if ((rangeColliders[i].gameObject.layer == UnitHandler.instance.InteractablesLayer ||
-                        rangeColliders[i].gameObject.layer == UnitHandler.instance.EnemyUnitsLayer) &&
-                        rangeColliders[i].gameObject.GetComponent<BasicObject>().Team != Team &&
-                        Vector3.Distance(rangeColliders[i].gameObject.transform.position, transform.position) <= AggroRange)
-                    {
-                        aggroTarget = rangeColliders[i].gameObject.transform;
-                        aggroUnit = aggroTarget.gameObject.GetComponent<BasicObject>();
-                        break;
-                    }
-                }
-                catch (System.Exception e)
-                {
-                    Debug.Log($"I = {i} exception {e.Message}");
-                }
+                aggroTarget = c.gameObject.transform;
+                aggroUnit = aggroTarget.gameObject.GetComponent<BasicObject>();
             }
         }
+        //private void CheckForEnemyTargets()
+        //{
+        //    Collider[] rangeColliders = Physics.OverlapSphere(transform.position, AggroRange);
+        //    for (int i = 0; i < rangeColliders.Length; i++)
+        //    {
+        //        try
+        //        {
+        //            if ((rangeColliders[i].gameObject.layer == UnitHandler.instance.InteractablesLayer ||
+        //                rangeColliders[i].gameObject.layer == UnitHandler.instance.EnemyUnitsLayer) &&
+        //                rangeColliders[i].gameObject.GetComponent<BasicObject>().Team != Team &&
+        //                Vector3.Distance(rangeColliders[i].gameObject.transform.position, transform.position) <= AggroRange)
+        //            {
+        //                aggroTarget = rangeColliders[i].gameObject.transform;
+        //                aggroUnit = aggroTarget.gameObject.GetComponent<BasicObject>();
+        //                break;
+        //            }
+        //        }
+        //        catch (System.Exception e)
+        //        {
+        //            Debug.Log($"I = {i} exception {e.Message}");
+        //        }
+        //    }
+        //}
 
         public override void MoveUnit(Vector3 _destination)
         {
             base.MoveUnit(_destination);
             aggroUnit = null;
+        }
+        public void AttackMoveUnit(Vector3 _destination)
+        {
+            base.MoveUnit(_destination);
+            HasPlayerMoveCommand = false;
         }
 
         private void MoveToTarget()
