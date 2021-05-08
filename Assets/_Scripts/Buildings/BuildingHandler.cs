@@ -25,15 +25,15 @@ namespace AvatarRTS.Buildings
             //CreateBuilding(TeamEnum.player, BuildingTypeEnum.Barracks, new Vector3(20, 0, -5), Quaternion.identity);
             //CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretBasic, new Vector3(16, 0, 3), Quaternion.identity);
             CreateBuilding(TeamEnum.player, BuildingTypeEnum.Spawner, new Vector3(20, 0, -5), Quaternion.identity);
-            CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretSentry, new Vector3(10, 0, 1), Quaternion.identity);
-            CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretSentry, new Vector3(10, 0, -7), Quaternion.identity);
-            CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretMammoth, new Vector3(9, 0, 3), Quaternion.identity);
+            CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretSentry, new Vector3(9, 0, -2), Quaternion.identity);
+            CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretSentry, new Vector3(9, 0, -7), Quaternion.identity);
+            CreateBuilding(TeamEnum.player, BuildingTypeEnum.TurretMammoth, new Vector3(8, 0, 3), Quaternion.identity);
 
             CreateBuilding(TeamEnum.enemy, BuildingTypeEnum.Spawner, new Vector3(-20, 0, -5), Quaternion.identity);
-            CreateBuilding(TeamEnum.enemy, BuildingTypeEnum.TurretSentry, new Vector3(-10, 0, 1), Quaternion.identity);
-            CreateBuilding(TeamEnum.enemy, BuildingTypeEnum.TurretSentry, new Vector3(-10, 0, -7), Quaternion.identity);
-            CreateBuilding(TeamEnum.enemy, BuildingTypeEnum.TurretMammoth, new Vector3(-9, 0, 3), Quaternion.identity);
-            CreateBuilding(TeamEnum.enemy, BuildingTypeEnum.TurretTesla, new Vector3(-8, 0, -12), Quaternion.identity);
+            CreateBuilding(TeamEnum.enemy, BuildingTypeEnum.TurretSentry, new Vector3(-9, 0, -2), Quaternion.identity);
+            CreateBuilding(TeamEnum.enemy, BuildingTypeEnum.TurretSentry, new Vector3(-9, 0, -7), Quaternion.identity);
+            CreateBuilding(TeamEnum.enemy, BuildingTypeEnum.TurretMammoth, new Vector3(-8, 0, 3), Quaternion.identity);
+            CreateBuilding(TeamEnum.enemy, BuildingTypeEnum.TurretTesla, new Vector3(-5, 0, -12), Quaternion.identity);
         }
         private GameObject CreateBuilding(TeamEnum team, BuildingTypeEnum type, Vector3 position, Quaternion rotation)
         {
