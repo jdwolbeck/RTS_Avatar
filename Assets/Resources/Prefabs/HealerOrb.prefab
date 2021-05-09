@@ -4939,3 +4939,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cf95f6dc5d9ad34a87177e1eaee13dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectileVisualObject: {fileID: 9200981320925748214}

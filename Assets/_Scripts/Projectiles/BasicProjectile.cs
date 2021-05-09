@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class BasicProjectile : MonoBehaviour
 {
+    private static float DESTROY_DELAY = 2f;
+
+    public GameObject ProjectileVisualObject;
     protected bool targetReached = false;
     protected float MoveSpeed = 2.5f;
     protected Vector3 target = Vector3.zero;
     protected TeamEnum Team;
     protected GameObject parentObject;
-    private DateTime reachedTargetTime;
+    private float destroyCountdown;
 
     public void InitializeProjectile(Vector3 projTarget, float projSpeed, GameObject projParent, TeamEnum projTeam)
     {
@@ -33,14 +36,16 @@ public class BasicProjectile : MonoBehaviour
                 //We've reached our target position, set the boolean
                 if (Vector3.Distance(target, this.transform.position) <= 0.2f)
                 {
-                    targetReached = true;
-                    reachedTargetTime = DateTime.Now;
+                    FinishProjectile();
                 }
             }
         }
-        else if((DateTime.Now - reachedTargetTime).TotalSeconds>= 2)
+        else
         {
-            Destroy(gameObject);
+            destroyCountdown -= Time.deltaTime;
+
+            if(destroyCountdown <= 0f)
+                Destroy(gameObject);
         }
     }
 
@@ -70,8 +75,20 @@ public class BasicProjectile : MonoBehaviour
 
     protected virtual void DoAction(Collider collision)
     {
-        targetReached = false;
-        Destroy(gameObject);
+        FinishProjectile();
+    }
+
+    protected virtual void FinishProjectile()
+    {
+        destroyCountdown = DESTROY_DELAY;
+        targetReached = true;
+
+        //Remove the rigidbody component so that it does not collide with anyone else while we wait for it to dissapear
+        Destroy(this.GetComponent<Rigidbody>());
+        if (ProjectileVisualObject != null)
+        {
+            ProjectileVisualObject.GetComponent<Renderer>().enabled = false;
+        }
     }
 
     protected virtual bool IsTargetedTeam(TeamEnum team)
